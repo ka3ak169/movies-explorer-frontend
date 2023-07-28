@@ -1,0 +1,13 @@
+.about-me__git {
+  display: inline-block;
+  margin: 99px 0 0;
+  text-decoration: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  transition: .4s;
+}
+
+.about-me__git:hover {
+  transform: scale(1.2);
+}

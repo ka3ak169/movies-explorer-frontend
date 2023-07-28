@@ -1,0 +1,9 @@
+.footer__link {
+  text-decoration: none;
+  color: #fff;
+  transition: .4s;
+}
+
+.footer__link:hover {
+  transform: scale(1.2);
+}

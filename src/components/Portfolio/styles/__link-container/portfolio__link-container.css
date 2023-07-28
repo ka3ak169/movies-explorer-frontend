@@ -1,0 +1,25 @@
+.portfolio__link-container {
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: relative; /* Добавлено для ::after */
+  overflow: hidden; /* Добавлено для ::after */
+}
+
+.portfolio__link-container::after {
+  content: ''; /* Пустое содержимое */
+  position: absolute; /* Абсолютное позиционирование */
+  left: 0; /* Положение левого края */
+  bottom: 0; /* Располагается внизу */
+  background-color: #073042; /* Цвет фона псевдоэлемента */
+  z-index: -1; /* Располагается позади текста */
+  width: 100%; /* Занимает всю ширину */
+  height: 0; /* Изначальная высота псевдоэлемента */
+  transition: 0.3s; /* Время перехода */
+}
+
+.portfolio__link-container:hover::after {
+  height: 100%; /* Высота псевдоэлемента при наведении */
+}

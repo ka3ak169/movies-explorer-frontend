@@ -1,0 +1,14 @@
+.techs__technology {
+  background-color: #303030;
+  width: 90px;
+  height: 60px;
+  border-radius: 10px;
+  line-height: 60px;
+  letter-spacing: -0.56px;
+  font-size: 14px;
+  transition: .3s;
+}
+
+.techs__technology:hover {
+  transform: scale(1.2);
+}

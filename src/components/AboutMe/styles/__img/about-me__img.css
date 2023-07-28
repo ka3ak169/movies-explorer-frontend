@@ -1,0 +1,8 @@
+.about-me__img {
+  object-fit: cover;
+  box-sizing: border-box;
+  max-width: 270px;
+  height: auto;
+  overflow: hidden;
+  border-radius: 10px;
+}

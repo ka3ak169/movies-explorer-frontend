@@ -1,0 +1,8 @@
+.about-project__container {
+  margin: 70px 0 0 0;
+  display: flex;
+  column-gap: 40px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}

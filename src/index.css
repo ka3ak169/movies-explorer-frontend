@@ -1,0 +1,59 @@
+@import url(./vendor/normalize.css);
+@import url(./styles/html.css);
+@import url(./styles/page.css);
+/* main */
+@import url(./components/Main/styles/main.css);
+/* promo */
+@import url(./components/Promo/styles/promo.css);
+@import url(./components/Promo/styles/__button/promo__button.css);
+@import url(./components/Promo/styles/__img/promo__img.css);
+@import url(./components/Promo/styles/__text/promo__text.css);
+@import url(./components/Promo/styles/__title/promo__title.css);
+/* about-project */
+@import url(./components/AboutProject/styles/about-project.css);
+@import url(./components/AboutProject/styles/__cell-sign/about-project__cell-sign.css);
+@import url(./components/AboutProject/styles/__column/about-project__column.css);
+@import url(./components/AboutProject/styles/__container/about-project__container.css);
+@import url(./components/AboutProject/styles/__divider/about-project__divider.css);
+@import url(./components/AboutProject/styles/__left-progress/about-project__left-progress.css);
+@import url(./components/AboutProject/styles/__left-scale/about-project__left-scale.css);
+@import url(./components/AboutProject/styles/__paragraph/about-project__paragraph.css);
+@import url(./components/AboutProject/styles/__right-progress/about-project__right-progress.css);
+@import url(./components/AboutProject/styles/__right-scale/about-project__right-scale.css);
+@import url(./components/AboutProject/styles/__scale/about-project__scale.css);
+@import url(./components/AboutProject/styles/__stage-description/about-project__stage-description.css);
+@import url(./components/AboutProject/styles/__title/about-project__title.css);
+/* techs */
+@import url(./components/Techs/styles/techs.css);
+@import url(./components/Techs/styles/__container/techs__container.css);
+@import url(./components/Techs/styles/__description/techs__description.css);
+@import url(./components/Techs/styles/__divider/techs__divider.css);
+@import url(./components/Techs/styles/__sub-title/techs__sub-title.css);
+@import url(./components/Techs/styles/__technology/techs__technology.css);
+@import url(./components/Techs/styles/__title/techs__title.css);
+/* about-me */
+@import url(./components/AboutMe/styles/about-me.css);
+@import url(./components/AboutMe/styles/__container/about-me__container.css);
+@import url(./components/AboutMe/styles/__description/about-me__description.css);
+@import url(./components/AboutMe/styles/__divider/about-me__divider.css);
+@import url(./components/AboutMe/styles/__git/about-me__git.css);
+@import url(./components/AboutMe/styles/__img/about-me__img.css);
+@import url(./components/AboutMe/styles/__name/about-me__name.css);
+@import url(./components/AboutMe/styles/__prof/about-me__prof.css);
+@import url(./components/AboutMe/styles/__story/about-me__story.css);
+@import url(./components/AboutMe/styles/__title/about-me__title.css);
+/* portfolio */
+@import url(./components/Portfolio/styles/portfolio.css);
+@import url(./components/Portfolio/styles/__arrow/portfolio__arrow.css);
+@import url(./components/Portfolio/styles/__link-container/portfolio__link-container.css);
+@import url(./components/Portfolio/styles/__link-text/portfolio__link-text.css);
+@import url(./components/Portfolio/styles/__title/portfolio__title.css);
+@import url(./components/Portfolio/styles/__divider/portfolio__divider.css);
+@import url(./components/Portfolio/styles/__links/portfolio__links.css);
+/* footer */
+@import url(./components/Footer/styles/footer.css);
+@import url(./components/Footer/styles/__container/footer__container.css);
+@import url(./components/Footer/styles/__link/footer__link.css);
+@import url(./components/Footer/styles/__links-container/footer__links-container.css);
+@import url(./components/Footer/styles/__title/footer__title.css);
+@import url(./components/Footer/styles/__year/footer__year.css);

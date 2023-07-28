@@ -1,0 +1,15 @@
+.promo__img {
+  background-image: url('../../../../images/planet.svg');
+  width: 310px;
+  height: 304px;
+  position: absolute;
+  top: 75px;
+  right: 70px;
+  transition: transform 0.5s ease-in-out;
+  transform: scale(1) rotate(0deg);
+}
+
+.promo__img:hover {
+  transform: scale(1.2) rotate(360deg);
+  transition: transform 6s ease-in-out;
+}
