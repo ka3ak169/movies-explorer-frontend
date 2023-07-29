@@ -5,7 +5,7 @@ function Portfolio() {
   return (
     <section className="portfolio">
       <h2 className="portfolio__title">Портфолио</h2>
-      <div className="portfolio__links">
+      <nav className="portfolio__links">
         <Link className="portfolio__link-container" to="https://github.com/ka3ak169/memories">
           <p className="portfolio__link-text">Статичный сайт</p>
           <div className="portfolio__arrow"></div>
@@ -20,7 +20,7 @@ function Portfolio() {
           <p className="portfolio__link-text">Одностраничное приложение</p>
           <div className="portfolio__arrow"></div>
         </Link>
-      </div>
+      </nav>
     </section>    
   );
 }

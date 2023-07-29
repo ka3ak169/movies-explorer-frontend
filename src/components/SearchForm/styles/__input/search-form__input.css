@@ -1,0 +1,15 @@
+.search-form__input {
+  font-size: 28px;
+  font-weight: 500;
+  color: #8B8B8B;
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.search-form__input::placeholder {
+  color: #8B8B8B;
+}

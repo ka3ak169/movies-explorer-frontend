@@ -1,0 +1,11 @@
+.filterCheckbox__checkbox:checked + .filterCheckbox__slider {
+  background-color: #3DDC84;
+}
+
+.filterCheckbox__checkbox:focus + .filterCheckbox__slider {
+  box-shadow: 0 0 1px #3DDC84;
+}
+
+.filterCheckbox__checkbox:checked + .filterCheckbox__slider:before {
+  transform: translateX(16px);
+}

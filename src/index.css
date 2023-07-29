@@ -57,3 +57,30 @@
 @import url(./components/Footer/styles/__links-container/footer__links-container.css);
 @import url(./components/Footer/styles/__title/footer__title.css);
 @import url(./components/Footer/styles/__year/footer__year.css);
+/* search-form */
+@import url(./components/SearchForm/styles/search-form.css);
+@import url(./components/SearchForm/styles/__divider/search-form__divider.css);
+@import url(./components/SearchForm/styles/__form/search-form__form.css);
+@import url(./components/SearchForm/styles/__input/search-form__input.css);
+@import url(./components/SearchForm/styles/__sbmt-btn/search-form__sbmt-btn.css);
+/* filterCheckbox */
+@import url(./components/FilterCheckbox/styles/filterCheckbox.css);
+@import url(./components/FilterCheckbox/styles/__checkbox/filterCheckbox__checkbox.css);
+@import url(./components/FilterCheckbox/styles/__container/filterCheckbox__container.css);
+@import url(./components/FilterCheckbox/styles/__sign/filterCheckbox__sign.css);
+@import url(./components/FilterCheckbox/styles/__slider/filterCheckbox__slider.css);
+@import url(./components/FilterCheckbox/styles/__switch/filterCheckbox__switch.css);
+/* moviesCardList */
+@import url(./components/MoviesCardList/styles/moviesCardList.css);
+/* moviesCard */
+@import url(./components/MoviesCard/styles/moviesCard.css);
+@import url(./components/MoviesCard/styles/__container/moviesCard__container.css);
+@import url(./components/MoviesCard/styles/__description/moviesCard__description.css);
+@import url(./components/MoviesCard/styles/__duration/moviesCard__duration.css);
+@import url(./components/MoviesCard/styles/__favorites/moviesCard__favorites.css);
+@import url(./components/MoviesCard/styles/__favorites/_active/moviesCard__favorites_active.css);
+@import url(./components/MoviesCard/styles/__img/moviesCard__img.css);
+@import url(./components/MoviesCard/styles/__name/moviesCard__name.css);
+/* preloader */
+@import url(./components/Preloader/styles/preloader.css);
+@import url(./components/Preloader/styles/__btn/preloader__btn.css);

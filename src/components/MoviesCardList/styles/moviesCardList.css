@@ -1,0 +1,7 @@
+.moviesCardList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px 20px;
+  box-sizing: border-box;
+  padding: 70px 70px 30px;
+}

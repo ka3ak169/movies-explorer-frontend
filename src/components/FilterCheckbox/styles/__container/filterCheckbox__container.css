@@ -1,0 +1,8 @@
+.filterCheckbox__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 14px;
+  margin: 32px 0 0;
+}

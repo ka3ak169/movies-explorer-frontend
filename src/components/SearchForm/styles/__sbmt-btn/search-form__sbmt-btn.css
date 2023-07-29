@@ -1,0 +1,20 @@
+.search-form__sbmt-btn {
+  height: 34px;
+  width: 34px;
+  border-radius: 34px;
+  background-color: #4285F4;
+  background-image: url('../../../../images/bluestrelka.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: background-color .6s, box-shadow .1s;
+}
+
+.search-form__sbmt-btn:hover {
+  cursor: pointer;
+  background-color: #3DDC84;
+  box-shadow: 3px 3px 3px 3px rgb(19, 19, 19);
+}
+
+.search-form__sbmt-btn:active {
+  box-shadow: none;
+}

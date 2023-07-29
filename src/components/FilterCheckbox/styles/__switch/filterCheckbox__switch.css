@@ -1,0 +1,11 @@
+.filterCheckbox__switch {
+  margin: 0;
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+}
+
+.filterCheckbox__switch .filterCheckbox__checkbox {
+  display:none;
+}
