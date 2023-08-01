@@ -1,0 +1,17 @@
+.profile__edit-btn {
+  margin: 208px auto 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  transition: color .3s;
+  font-size: 13px;
+  font-weight: 400;
+  display: block;
+
+}
+
+.profile__edit-btn:hover {
+  cursor: pointer;
+  color: rgba(255, 255, 255, .6);
+}

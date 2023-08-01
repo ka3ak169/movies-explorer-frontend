@@ -1,0 +1,18 @@
+.register__error {
+  margin: 10px 0 0;
+  color: #EE3465;
+  font-size: 10px;
+  font-weight: 400;
+  text-align: start;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* visibility: hidden; */
+}
+
+.register__error:hover {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}

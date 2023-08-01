@@ -1,0 +1,18 @@
+.profile__exit-btn {
+  margin: 16px auto 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: #EE3465;
+  transition: color .3s;
+  font-size: 13px;
+  font-weight: 400;
+  display: block;
+
+}
+
+.profile__exit-btn:hover {
+  cursor: pointer;
+  color: rgba(238, 52, 101, 0.6);
+
+}
