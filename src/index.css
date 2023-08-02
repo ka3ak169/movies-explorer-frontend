@@ -110,3 +110,10 @@
 @import url(./components/Register/styles/__link/register__link.css);
 @import url(./components/Register/styles/__logo/register__logo.css);
 @import url(./components/Register/styles/__title/register__title.css);
+/* login */
+@import url(./components/Login/styles/__button/login__button.css);
+/* not-found */
+@import url(./components/NotFound/styles/not-found.css);
+@import url(./components/NotFound/styles/__backpage/not-found__backpage.css);
+@import url(./components/NotFound/styles/__paragraph/not-found__paragraph.css);
+@import url(./components/NotFound/styles/__title/not-found__title.css);

@@ -1,0 +1,12 @@
+.not-found__backpage {
+  margin: 184px 0 0;
+  text-decoration: none;
+  display: inline-block;
+  color: #4285F4;
+  font-size: 14px;
+  transition: .4s;
+}
+
+.not-found__backpage:hover {
+  color: #3DDC84;  
+}
