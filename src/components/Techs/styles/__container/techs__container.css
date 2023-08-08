@@ -7,3 +7,22 @@
   justify-content: center;
   align-items: center;
 }
+
+@media screen and (max-width: 768px) {
+  .techs__container {
+    margin: 83px auto 0;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .techs__container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 10px;
+    justify-items: center;
+    align-items: start;
+    margin: 50px auto 0;
+    width: 0;
+  }
+}

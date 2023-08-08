@@ -1,0 +1,23 @@
+.navigation__signin {
+  height: 32px;
+  width: 76px;
+  background-color: #3DDC84;
+  text-decoration: none;
+  color: #000;
+  text-align: center;
+  line-height: 32px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 3px;
+  transition: .3s;
+}
+
+.navigation__signin:hover {
+  background-color: yellow;
+}
+
+@media screen and (max-width: 320px) {
+  .navigation__signin {
+    font-size: 10px;
+  }
+}

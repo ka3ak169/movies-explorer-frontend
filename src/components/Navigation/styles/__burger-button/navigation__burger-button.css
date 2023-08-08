@@ -1,0 +1,21 @@
+.navigation__burger-button {
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  background-image: url('../../../../images/burger.svg');
+  transition: .3s;
+}
+
+.navigation__burger-button:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+@media (min-width: 769px) {
+  .navigation__burger-button {
+    display: none;
+  }
+}

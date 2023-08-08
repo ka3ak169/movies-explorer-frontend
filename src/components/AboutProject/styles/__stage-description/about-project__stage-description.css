@@ -4,3 +4,9 @@
   letter-spacing: -0.8px;
   font-weight: 400;
 }
+
+@media screen and (max-width: 375px) {
+  .about-project__stage-description {
+    font-size: 18px;
+  }
+}

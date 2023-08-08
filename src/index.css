@@ -4,6 +4,27 @@
 @import url(./styles/page.css);
 /* main */
 @import url(./components/Main/styles/main.css);
+/* header */
+@import url(./components/Header/styles/header.css);
+@import url(./components/Header/styles/_home/header_home.css);
+@import url(./components/Header/styles/__logo/header__logo.css);
+/* navigation */
+@import url(./components/Navigation/styles/__button-container/navigation__button-container.css);
+@import url(./components/Navigation/styles/__registr/navigation__registr.css);
+@import url(./components/Navigation/styles/__signin/navigation__signin.css);
+@import url(./components/Navigation/styles/__logo/navigation__logo.css);
+@import url(./components/Navigation/styles/__link/navigation__link.css);
+@import url(./components/Navigation/styles/__film-container/navigation__film-container.css);
+@import url(./components/Navigation/styles/__account-container/navigation__account-container.css);
+@import url(./components/Navigation/styles/__account-container/_enabled/navigation__account-container_enabled.css);
+@import url(./components/Navigation/styles/__burger-button/navigation__burger-button.css);
+/* side navigation */
+@import url(./components/SideNavigation/styles/side-navigation.css);
+@import url(./components/SideNavigation/styles/_disabled/side-navigation_disabled.css);
+@import url(./components/SideNavigation/styles/__overlay/side-navigation__overlay.css);
+@import url(./components/SideNavigation/styles/__close-btn/side-navigation__close-btn.css);
+@import url(./components/SideNavigation/styles/__link/side-navigation__link.css);
+@import url(./components/SideNavigation/styles/__link-container/side-navigation__link-container.css);
 /* promo */
 @import url(./components/Promo/styles/promo.css);
 @import url(./components/Promo/styles/__button/promo__button.css);
@@ -54,6 +75,7 @@
 /* footer */
 @import url(./components/Footer/styles/footer.css);
 @import url(./components/Footer/styles/__container/footer__container.css);
+@import url(./components/Footer/styles/__divider/footer__divider.css);
 @import url(./components/Footer/styles/__link/footer__link.css);
 @import url(./components/Footer/styles/__links-container/footer__links-container.css);
 @import url(./components/Footer/styles/__title/footer__title.css);

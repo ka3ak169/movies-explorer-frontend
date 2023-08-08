@@ -1,0 +1,14 @@
+.side-navigation__close-btn {  
+  background-image: url('../../../../images/close.svg');
+  height: 22px;
+  width: 22px;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 24px;
+  right: 24px;  
+}
+
+.side-navigation__close-btn:hover {  
+  cursor: pointer;
+}

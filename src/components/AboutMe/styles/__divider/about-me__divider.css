@@ -3,3 +3,9 @@
   border: none;
   border-top: 1px solid #DADADA;
 }
+
+@media screen and (max-width: 375px) {
+  .about-me__divider {
+    margin: 28px 0 0 0;
+  }
+}

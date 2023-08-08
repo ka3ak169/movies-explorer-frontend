@@ -1,0 +1,12 @@
+.navigation__link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+  transition: .3s;
+  margin: 0;
+}
+
+.navigation__link:hover {
+  font-weight: 500;
+}

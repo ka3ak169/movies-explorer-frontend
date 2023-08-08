@@ -39,3 +39,15 @@
 .promo__button:hover {
   cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+  .promo__button {
+    margin-top: 92px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .promo__button {
+    margin-top: 80px;
+  }
+}

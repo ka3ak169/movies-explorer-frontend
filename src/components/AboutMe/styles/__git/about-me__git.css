@@ -11,3 +11,15 @@
 .about-me__git:hover {
   transform: scale(1.2);
 }
+
+@media screen and (max-width: 768px) {
+  .about-me__git  {
+    margin: 87px 0 0;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .about-me__git  {
+    margin: 40px 0 0;
+  }
+}

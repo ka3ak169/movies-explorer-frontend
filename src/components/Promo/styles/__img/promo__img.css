@@ -1,5 +1,6 @@
 .promo__img {
   background-image: url('../../../../images/planet.svg');
+  background-size: contain;
   width: 310px;
   height: 304px;
   position: absolute;
@@ -13,3 +14,17 @@
   transform: scale(1.2) rotate(360deg);
   transition: transform 6s ease-in-out;
 }
+
+@media screen and (max-width: 768px) {
+  .promo__img {
+    position: static;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .promo__img {
+    width: 210px;
+    height: 204px;
+  }
+}
+

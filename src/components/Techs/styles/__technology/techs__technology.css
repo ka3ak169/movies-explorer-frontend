@@ -12,3 +12,9 @@
 .techs__technology:hover {
   transform: scale(1.2);
 }
+
+@media screen and (max-width: 375px) {
+  .techs__technology {
+      overflow: hidden;
+  }
+}

@@ -21,7 +21,7 @@ function App() {
         path="/"
         element={
           <>
-            <Header/>
+            <Header location={"home"}/>
             <Main/>
             <Footer/>
           </>
@@ -31,7 +31,7 @@ function App() {
         path="/movies"
         element={
           <>
-            <Header/>
+            <Header location={"main"}/>
             <Movies/>
             <Footer/>
           </>

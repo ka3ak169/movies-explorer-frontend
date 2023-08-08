@@ -4,3 +4,16 @@
   font-size: 18px;
   line-height: 20px;
 }
+
+@media screen and (max-width: 768px) {
+  .about-me__prof {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .about-me__prof {
+    font-size: 11px;
+    line-height: 16px;
+  }
+}

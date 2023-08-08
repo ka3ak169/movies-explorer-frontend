@@ -5,3 +5,15 @@
   line-height: 58px;
   font-weight: 400;
 }
+
+@media screen and (max-width: 768px) {
+  .about-me__name {
+    font-size: 40px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .about-me__name {
+    font-size: 30;
+  }
+}

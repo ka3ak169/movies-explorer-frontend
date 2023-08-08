@@ -1,12 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Navigation from "../Navigation/Navigation"
+import logo from "../../images/logo.svg"
 
-function Header() {
+function Header({location}) {
+  const headerClass = location === 'home' ? 'header header_home' : 'header';
+
   return (
-    <header className="header">
-      <img className="header__logo" src="#" alt="лого" />
-      <Link>Регистрация</Link>
-      <Link>Войти</Link>
+    <header className={headerClass}>
+      <img className="header__logo" src={logo} alt="лого" />
+      <Navigation location={location}/>
     </header>
   );
 }
