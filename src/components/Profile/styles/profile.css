@@ -3,5 +3,35 @@
   color: #fff;
   text-align: center;
   padding: 74px 0 0;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
 }
+
+@media screen and (max-width: 768px) {
+  .profile {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .profile {
+    padding: 56px 30px 30px;
+  }
+}
+
+/* @media screen and (max-width: 376px) {
+  .profile {
+    box-sizing: border-box;
+    position: static;
+    left: auto;
+    top: auto;
+    transform: none;
+  }
+} */

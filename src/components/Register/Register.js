@@ -24,11 +24,14 @@ function Register() {
         </div>
         <span  className='register__error'>Что-то пошло не так...</span>
       </form>
-      <button className='register__button'>Зарегистрироваться</button>
-      <div className='register__link-container'>
-        <p className='register__link-label'>Уже зарегистрированы?</p>
-        <Link className='register__link' to='#' >Войти</Link>
+      <div className='register__button-container'>
+        <button className='register__button'>Зарегистрироваться</button>
+        <div className='register__link-container'>
+          <p className='register__link-label'>Уже зарегистрированы?</p>
+          <Link className='register__link' to='#' >Войти</Link>
+        </div>
       </div>
+      
     </section>
   );
 }

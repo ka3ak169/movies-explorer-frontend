@@ -2,11 +2,11 @@ import React from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies() {
+function SavedMovies({location}) {
     return (
         <div className='main'>
           <SearchForm />
-          <MoviesCardList />
+          <MoviesCardList location={location}/>
         </div>
     );
 }

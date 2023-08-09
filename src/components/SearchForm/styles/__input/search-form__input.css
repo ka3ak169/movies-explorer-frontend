@@ -13,3 +13,9 @@
 .search-form__input::placeholder {
   color: #8B8B8B;
 }
+
+@media screen and (max-width: 376px) {
+  .search-form__input {    
+    font-size: 18px;
+  }
+}

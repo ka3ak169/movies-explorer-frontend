@@ -8,12 +8,12 @@
   margin: auto;
 }
 
-/* @media screen and (max-width: 880px) {
+@media screen and (max-width: 768px) {
   .page {
-      padding: 0 19px 0;
+      position: static;
   }
 }
-@media screen and (max-width: 600px) {
+/* @media screen and (max-width: 600px) {
   .page {
       padding: 0;
   }

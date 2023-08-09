@@ -12,12 +12,14 @@ function Profile() {
             </div>
             <hr className='profile__divider'/>
             <div className='profile__group'>
-              <label className='profile__label' for="email">Email</label>
+              <label className='profile__label' for="email">E-mail</label>
               <input className='profile__input' type="email" id="email" name="email" />
             </div>            
           </form>
-          <button className='profile__edit-btn' type="button" id="editBtn">Редактировать</button>
-          <button className='profile__exit-btn' type="button" id="exitBtn">Выйти из аккаунта</button>
+          <div className='profile__btn-container'>
+            <button className='profile__edit-btn' type="button" id="editBtn">Редактировать</button>
+            <button className='profile__exit-btn' type="button" id="exitBtn">Выйти из аккаунта</button>
+          </div>          
         </section>
     );
 }

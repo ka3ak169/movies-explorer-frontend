@@ -1,5 +1,5 @@
 .profile__exit-btn {
-  margin: 16px auto 0;
+  margin-top: 16px;
   padding: 0;
   border: none;
   background-color: transparent;
@@ -14,5 +14,4 @@
 .profile__exit-btn:hover {
   cursor: pointer;
   color: rgba(238, 52, 101, 0.6);
-
 }

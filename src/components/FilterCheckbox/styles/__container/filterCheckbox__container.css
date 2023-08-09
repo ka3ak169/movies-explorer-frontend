@@ -6,3 +6,16 @@
   gap: 14px;
   margin: 32px 0 0;
 }
+
+@media screen and (max-width: 768px) {
+  .filterCheckbox__container {    
+    justify-content: flex-end;
+    margin: 29px 0 0;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .filterCheckbox__container {    
+    justify-content: center;    
+  }
+}

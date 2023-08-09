@@ -42,7 +42,7 @@ function App() {
         element={
           <>
             <Header/>
-            <SavedMovies/>
+            <SavedMovies location={"saved"}/>
             <Footer/>
           </>
         }
@@ -51,7 +51,7 @@ function App() {
         path="/profile"
         element={
           <>
-            <Header/>
+            <Header  location={"main"}/>
             <Profile/>
           </>
         }

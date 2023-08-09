@@ -18,10 +18,12 @@ function Login() {
         </div>
         <span  className='register__error'>Что-то пошло не так...</span>
       </form>
-      <button className='register__button login__button'>Войти</button>
-      <div className='register__link-container'>
-        <p className='register__link-label'>Ещё не зарегистрированы?</p>
-        <Link className='register__link' to='#' >Регистрация</Link>
+      <div className='register__button-container'>
+        <button className='register__button login__button'>Войти</button>
+        <div className='register__link-container'>
+          <p className='register__link-label'>Ещё не зарегистрированы?</p>
+          <Link className='register__link' to='#' >Регистрация</Link>
+        </div>
       </div>
     </section>
   );

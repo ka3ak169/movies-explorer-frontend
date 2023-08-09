@@ -1,5 +1,6 @@
 .not-found__backpage {
-  margin: 184px 0 0;
+  position: absolute; /* Добавлено для абсолютного позиционирования внутри .not-found */
+  bottom: 30px; /* Отступ снизу 30 пикселей */
   text-decoration: none;
   display: inline-block;
   color: #4285F4;
@@ -9,4 +10,10 @@
 
 .not-found__backpage:hover {
   color: #3DDC84;  
+}
+
+@media screen and (max-width: 376px) {
+  .not-found__backpage {
+    font-size: 12px;
+  }
 }

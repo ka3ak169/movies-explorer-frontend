@@ -7,7 +7,7 @@
   line-height: 60;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 376px) {
   .portfolio__arrow {
     width: 18px;
     height: 18px;

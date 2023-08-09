@@ -2,7 +2,7 @@
   margin: 0;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 376px) {
   .footer__year {
     margin-top: 30px;
     color: #8B8B8B;

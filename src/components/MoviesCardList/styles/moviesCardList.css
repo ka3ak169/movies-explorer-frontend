@@ -4,4 +4,32 @@
   gap: 32px 20px;
   box-sizing: border-box;
   padding: 70px 70px 30px;
+  align-items: center;
+  margin: 0;
+
+}
+
+@media screen and (max-width: 1279px) {
+  .moviesCardList {      
+    grid-template-columns: repeat(3, 1fr);    
+  }
+}
+
+@media screen and (max-width: 930px) {
+  .moviesCardList {    
+    gap: 36px 30px;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 70px 30px 30px;    
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .moviesCardList {    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 40px 10px 30px;    
+  }
 }

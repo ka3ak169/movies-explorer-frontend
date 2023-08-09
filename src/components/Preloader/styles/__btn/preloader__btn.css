@@ -22,3 +22,9 @@
 .preloader__btn:active {
   box-shadow: none;
 }
+
+@media screen and (max-width: 375px) {
+  .preloader__btn {    
+    max-width: 240px;    
+  }
+}

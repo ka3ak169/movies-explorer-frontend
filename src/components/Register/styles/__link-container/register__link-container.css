@@ -7,3 +7,9 @@
   font-size: 14px;
   font-weight: 400;
 }
+
+@media screen and (max-width: 376px) {
+  .register__link-container {
+    font-size: 12px;
+  }
+}

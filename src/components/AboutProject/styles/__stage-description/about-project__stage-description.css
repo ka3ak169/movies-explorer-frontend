@@ -5,7 +5,7 @@
   font-weight: 400;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 376px) {
   .about-project__stage-description {
     font-size: 18px;
   }

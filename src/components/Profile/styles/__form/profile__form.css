@@ -1,6 +1,7 @@
 .profile__form {
-  margin: 109px auto 0;
-  max-width: 442px;
+  margin: 123px auto 0;
+  max-width: 410px;
+  width: 100%;
   box-sizing: border-box;
-  padding: 16px;
+  /* padding: 16px; */
 }
