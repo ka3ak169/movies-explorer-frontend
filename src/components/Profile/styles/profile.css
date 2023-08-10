@@ -22,16 +22,17 @@
 
 @media screen and (max-width: 500px) {
   .profile {
-    padding: 56px 30px 30px;
+    padding: 70px 30px 40px;
   }
 }
 
-/* @media screen and (max-width: 376px) {
+@media screen and (max-width: 376px) {
   .profile {
+    /* padding: 88px 30px 40px; */
     box-sizing: border-box;
     position: static;
     left: auto;
     top: auto;
     transform: none;
   }
-} */
+}

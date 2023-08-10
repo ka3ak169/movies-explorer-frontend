@@ -1,11 +1,16 @@
 .not-found__backpage {
-  position: absolute; /* Добавлено для абсолютного позиционирования внутри .not-found */
-  bottom: 30px; /* Отступ снизу 30 пикселей */
+  position: absolute;
+  bottom: 30px;
   text-decoration: none;
   display: inline-block;
   color: #4285F4;
   font-size: 14px;
   transition: .4s;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none; 
 }
 
 .not-found__backpage:hover {

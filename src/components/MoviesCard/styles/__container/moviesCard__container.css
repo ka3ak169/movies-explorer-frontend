@@ -8,4 +8,13 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 24px;
+  box-sizing: border-box;
 }
+
+/* .moviesCard__container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 14px 12px;
+  box-sizing: border-box;
+} */

@@ -3,7 +3,7 @@ import React from 'react';
 
 function FilterCheckbox() {
   return (
-    <div className="filterCheckbox__container">
+    <div className="filterCheckbox">
       <label className="filterCheckbox__switch">
         <input className="filterCheckbox__checkbox" type="checkbox" defaultChecked={false}/>
         <span className="filterCheckbox__slider" />

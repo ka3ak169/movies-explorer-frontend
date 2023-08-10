@@ -10,6 +10,8 @@
 @media screen and (max-width: 768px) {
   .techs__description {
     margin: 22px auto 0;
+    font-size: 12px;
+    line-height: 18px;
   }
 }
 

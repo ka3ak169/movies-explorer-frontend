@@ -8,12 +8,12 @@ function Profile() {
           {/* <form className='profile__form profile__form profile__form_active'> */}
             <div className='profile__group'>
               <label className='profile__label' for="name">Имя</label>
-              <input className='profile__input' type="text" id="name" name="name" />
+              <input className='profile__input' type="text" id="name" name="name" required />
             </div>
             <hr className='profile__divider'/>
             <div className='profile__group'>
               <label className='profile__label' for="email">E-mail</label>
-              <input className='profile__input' type="email" id="email" name="email" />
+              <input className='profile__input' type="email" id="email" name="email" required />
             </div>            
           </form>
           <div className='profile__btn-container'>

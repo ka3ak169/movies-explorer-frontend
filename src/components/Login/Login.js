@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 function Login() {
   return (
     <section className='register'>
-      <div className='register__logo'></div>
+      <Link to={'/'} className='register__logo'>    
+        <div className='register__logo'></div>
+      </Link>
       <h2 className='register__title'>Рады видеть!</h2>
       <form className='register__form'>        
         <div className='register__input-container'>
@@ -22,7 +24,7 @@ function Login() {
         <button className='register__button login__button'>Войти</button>
         <div className='register__link-container'>
           <p className='register__link-label'>Ещё не зарегистрированы?</p>
-          <Link className='register__link' to='#' >Регистрация</Link>
+          <Link className='register__link' to='/signin' >Регистрация</Link>
         </div>
       </div>
     </section>

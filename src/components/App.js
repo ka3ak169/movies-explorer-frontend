@@ -41,7 +41,7 @@ function App() {
         path="/saved-movies"
         element={
           <>
-            <Header/>
+            <Header location={"main"}/>
             <SavedMovies location={"saved"}/>
             <Footer/>
           </>

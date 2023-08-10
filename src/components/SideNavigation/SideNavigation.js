@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 function SideNavigation({ isMenuOpen, setMenuOpen }) {
@@ -12,13 +12,13 @@ function SideNavigation({ isMenuOpen, setMenuOpen }) {
       <div className={`side-navigation ${isMenuOpen ? '' : 'side-navigation_disabled'}`}>
         <div className="side-navigation__close-btn" onClick={closeSideNavigation}></div>
         <nav className="side-navigation__link-container">
-          <Link className="side-navigation__link">Главная</Link>
-          <Link className="side-navigation__link">Фильмы</Link>
-          <Link className="side-navigation__link">Сохранённые фильмы</Link>
+          <Link className="side-navigation__link" to={'/'}>Главная</Link>
+          <Link className="side-navigation__link" to={'/movies'}>Фильмы</Link>
+          <Link className="side-navigation__link" to={'/saved-movies'}>Сохранённые фильмы</Link>
         </nav>
-        <Link className={`navigation__account-container ${isMenuOpen ? 'navigation__account-container_enabled' : ''}`} to={"/"}>
-          <p className="navigation__link" to={"/"}>Аккаунт</p>
-          <div className="navigation__logo" to={"/"}></div>
+        <Link className={`navigation__account-container ${isMenuOpen ? 'navigation__account-container_enabled' : ''}`} to={"/profile"}>
+          <p className="navigation__link">Аккаунт</p>
+          <div className="navigation__logo"></div>
         </Link>
       </div>
     </>

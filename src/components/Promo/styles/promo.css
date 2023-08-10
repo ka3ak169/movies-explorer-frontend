@@ -1,7 +1,7 @@
 .promo {
   background-color: #073042;
   position: relative;
-  padding: 75px 0 99px 75px;
+  padding: 75px 0 75px 70px;
 }
 
 @media screen and (max-width: 768px) {

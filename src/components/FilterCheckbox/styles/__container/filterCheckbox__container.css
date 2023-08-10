@@ -1,4 +1,4 @@
-.filterCheckbox__container {
+/* .filterCheckbox__container {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -8,8 +8,8 @@
 }
 
 @media screen and (max-width: 768px) {
-  .filterCheckbox__container {    
-    justify-content: flex-end;
+  .filterCheckbox__container {
+    flex-direction: row-reverse;
     margin: 29px 0 0;
   }
 }
@@ -18,4 +18,4 @@
   .filterCheckbox__container {    
     justify-content: center;    
   }
-}
+} */

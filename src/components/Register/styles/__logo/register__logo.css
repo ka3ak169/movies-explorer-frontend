@@ -1,5 +1,6 @@
 .register__logo {
   background-image: url('../../../../images/logo.svg');
+  background-repeat: no-repeat;
   height: 38px;
   width: 38px;
 }

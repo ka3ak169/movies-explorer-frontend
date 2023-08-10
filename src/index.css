@@ -9,6 +9,7 @@
 @import url(./components/Header/styles/_home/header_home.css);
 @import url(./components/Header/styles/__logo/header__logo.css);
 /* navigation */
+@import url(./components/Navigation/styles/navigation.css);
 @import url(./components/Navigation/styles/__button-container/navigation__button-container.css);
 @import url(./components/Navigation/styles/__registr/navigation__registr.css);
 @import url(./components/Navigation/styles/__signin/navigation__signin.css);
