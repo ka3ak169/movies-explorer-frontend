@@ -1,39 +1,97 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useFormValidation } from '../../utils/useFormValidation'
 
-function Register() {
+function Register({ onSubmit }) {
+  const { values, errors, isValid, handleChange, reset } = useFormValidation();
+
+  function handleSubmit (evt) {
+    evt.preventDefault();
+    // console.log(isValid);
+
+    // console.log(values["registerName"], values["registerEmail"], values["registerPassword"]);
+    onSubmit(values["registerName"], values["registerEmail"], values["registerPassword"]);
+    reset();
+  }
+
   return (
-    <section className='register'>
-      <Link to={'/'} className='register__logo'>    
-        <div className='register__logo'></div>
+    <section className="register">
+      <Link to={"/"} className="register__logo">
+        <div className="register__logo"></div>
       </Link>
-      <h2 className='register__title'>Добро пожаловать!</h2>
-      <form className='register__form'>
-        <div className='register__input-container'>
-          <label  className='register__label'>Имя</label>
-          <input className='register__input register__input_error' placeholder='Имя' type='text' autocomplete="off"/>
+      <h2 className="register__title">Добро пожаловать!</h2>
+      <form className="register__form" onSubmit={handleSubmit} noValidate>
+        <div className="register__input-container">
+          <label className="register__label">Имя</label>
+          {/* Name */}
+          <input
+            className={`register__input ${
+              errors["registerName"] ? "register__input_error" : ""
+            }`}
+            name="registerName"
+            value={values["registerName"] ?? ""}
+            onChange={handleChange}
+            placeholder="Имя"
+            type="text"
+            required
+            minLength="2"
+            maxLength="40"
+            autoComplete="off"
+          />
         </div>
-        {/* что бы увидеть текст ошибок нужно изменить значение visibility у класса "register__error" */}
-        <span  className='register__error'>Обратите внимание, что pointer-events: none; не всегда работает в некоторых браузерах, особенно старых, поэтому его использование может зависеть от требований к поддержке браузеров для вашего проекта.</span>
-        <div className='register__input-container'>
-          <label  className='register__label'>E-mail</label>
-          <input className='register__input' type='Email' placeholder='Email'autocomplete="off"/>
+        <span className="register__error">{errors["registerName"]}</span>
+        <div className="register__input-container">
+          <label className="register__label">E-mail</label>
+          {/* Email */}
+          <input
+            className={`register__input ${
+              errors["registerEmail"] ? "register__input_error" : ""
+            }`}
+            name="registerEmail"
+            value={values["registerEmail"] ?? ""}
+            onChange={handleChange}
+            type="Email"
+            placeholder="Email"
+            required
+            autoComplete="off"
+          />
         </div>
-        <span  className='register__error'>Что-то пошло не так...</span>
-        <div className='register__input-container'>
-          <label  className='register__label'>Пароль</label>
-          <input className='register__input register__input_error' type='password'  placeholder='password' autocomplete="off"/>
+        <span className="register__error">{errors["registerEmail"]}</span>
+        <div className="register__input-container">
+          <label className="register__label">Пароль</label>
+          {/* Password */}
+          <input
+            className={`register__input ${
+              errors["registerPassword"] ? "register__input_error" : ""
+            }`}
+            name="registerPassword"
+            value={values["registerPassword"] ?? ""}
+            onChange={handleChange}
+            type="password"
+            placeholder="password"
+            required
+            minLength="8"
+            autoComplete="off"
+          />
         </div>
-        <span  className='register__error'>Что-то пошло не так...</span>
+        <span className="register__error">{errors["registerPassword"]}</span>
+        <div className="register__button-container">
+          <button
+            className={`register__button ${
+              isValid ? "" : "register__button_disabled"
+            }`}
+            type="submit"
+          >
+            Зарегистрироваться
+          </button>
+          <div className="register__link-container">
+            <p className="register__link-label">Уже зарегистрированы?</p>
+            <Link className="register__link" to="/signup">
+              Войти
+            </Link>
+          </div>
+        </div>
       </form>
-      <div className='register__button-container'>
-        <button className='register__button'>Зарегистрироваться</button>
-        <div className='register__link-container'>
-          <p className='register__link-label'>Уже зарегистрированы?</p>
-          <Link className='register__link' to='/signup' >Войти</Link>
-        </div>
-      </div>
-      
     </section>
   );
 }

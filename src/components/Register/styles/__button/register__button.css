@@ -9,6 +9,7 @@
   transition: .4s;
   font-size: 14px;
   font-weight: 500;
+  transition: .3s;
 }
 
 .register__button:hover {

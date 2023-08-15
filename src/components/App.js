@@ -1,7 +1,7 @@
 import {
   Route,
   Routes,
-  // useNavigate,
+  useNavigate,
 } from "react-router-dom";
 import Header from "./Header/Header";
 import Main  from "./Main/Main";
@@ -13,7 +13,39 @@ import Register from './Register/Register';
 import Login from './Login/Login';
 import NotFound from './NotFound/NotFound';
 
+
+import { register, authorization, authorize } from "../utils/Auth";
+
+
 function App() {
+  const navigate = useNavigate();
+
+  const handleRegisterSubmit = (name, email, password) => {
+    console.log(name, email, password);
+    register(name, email, password)
+      .then((result) => {
+        console.log(result);
+        navigate("/signup");
+      })
+      .catch((error) => {
+        // Обработка ошибки
+        console.log(error);
+      });
+  };
+  
+  const handleLoginSubmit = (email, password) => {
+    console.log(email, password);
+    authorization(email, password)
+      .then((result) => {
+        console.log(result);
+        navigate("/movies");
+      })
+      .catch((error) => {
+        // Обработка ошибки
+        console.log(error);
+      });
+  };
+
   return (
   <div className="page">
     <Routes>
@@ -60,7 +92,9 @@ function App() {
         path="/signin"
         element={
           <>
-            <Register/>
+            <Register
+              onSubmit={handleRegisterSubmit}
+            />
           </>
         }
       />
@@ -68,7 +102,9 @@ function App() {
         path="/signup"
         element={
           <>
-            <Login/>
+            <Login
+              onSubmit={handleLoginSubmit}
+            />
           </>
         }
       />

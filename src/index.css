@@ -124,9 +124,11 @@
 /* register */
 @import url(./components/Register/styles/register.css);
 @import url(./components/Register/styles/__button/register__button.css);
+@import url(./components/Register/styles/__button/_disabled/register__button_disabled.css);
 @import url(./components/Register/styles/__error/register__error.css);
 @import url(./components/Register/styles/__form/register__form.css);
 @import url(./components/Register/styles/__input-container/register__input-container.css);
+@import url(./components/Register/styles/__input/_error/register__input_error.css);
 @import url(./components/Register/styles/__input/register__input.css);
 @import url(./components/Register/styles/__label/register__label.css);
 @import url(./components/Register/styles/__link-container/register__link-container.css);
