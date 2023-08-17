@@ -2,11 +2,14 @@
   height: 34px;
   width: 34px;
   border-radius: 34px;
+  border: none;
   background-color: #4285F4;
   background-image: url('../../../../images/bluestrelka.svg');
   background-repeat: no-repeat;
   background-position: center;
   transition: background-color .6s, box-shadow .1s;
+  margin: 0;
+  padding: 0;
 }
 
 .search-form__sbmt-btn:hover {

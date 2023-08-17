@@ -46,6 +46,27 @@ export const authorization = (email, password) => {
           throw new Error(data.message);
         });
       }
-    })
+    })    
 };
+
+export const authorize = ( token ) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  .then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      // Получаем текст ошибки из ответа сервера
+      return response.json().then((data) => {
+        throw new Error(data.message);
+      });
+    }
+  })
+};
+
 

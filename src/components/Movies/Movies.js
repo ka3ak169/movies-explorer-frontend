@@ -3,10 +3,12 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 
-function Movies() {
+function Movies({ onGetFilms }) {
     return (
         <main className='main'>
-          <SearchForm />
+          <SearchForm
+            onGetFilms={onGetFilms}
+          />
           <MoviesCardList />
           <Preloader />
         </main>

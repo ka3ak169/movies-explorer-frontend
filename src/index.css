@@ -84,6 +84,7 @@
 /* search-form */
 @import url(./components/SearchForm/styles/search-form.css);
 @import url(./components/SearchForm/styles/__divider/search-form__divider.css);
+@import url(./components/SearchForm/styles/__error/search-form__error.css);
 @import url(./components/SearchForm/styles/__form/search-form__form.css);
 @import url(./components/SearchForm/styles/__input/search-form__input.css);
 @import url(./components/SearchForm/styles/__sbmt-btn/search-form__sbmt-btn.css);
@@ -112,6 +113,7 @@
 /* profile */
 @import url(./components/Profile/styles/profile.css);
 @import url(./components/Profile/styles/__edit-btn/profile__edit-btn.css);
+@import url(./components/Profile/styles/__error/profile__error.css);
 @import url(./components/Profile/styles/__exit-btn/profile__exit-btn.css);
 @import url(./components/Profile/styles/__btn-container/profile__btn-container.css);
 @import url(./components/Profile/styles/__form/profile__form.css);
@@ -145,4 +147,11 @@
 @import url(./components/NotFound/styles/__paragraph/not-found__paragraph.css);
 @import url(./components/NotFound/styles/__title/not-found__title.css);
 @import url(./components/NotFound/styles/__container/not-found__container.css);
+/* InfoTooltip */
+@import url(./components/InfoTooltip/styles/info-popup.css);
+@import url(./components/InfoTooltip/styles/_opened/info-popup_opened.css);
+@import url(./components/InfoTooltip/styles/__text/info-popup__text.css);
+@import url(./components/InfoTooltip/styles/__picture/info-popup__picture.css);
+@import url(./components/InfoTooltip/styles/__container/info-popup__container.css);
+@import url(./components/InfoTooltip/styles/__close-button/info-popup__close-button.css);
 

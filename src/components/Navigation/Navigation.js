@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext  } from "react";
 import { Link } from "react-router-dom";
 import SideNavigation from '../SideNavigation/SideNavigation'
 import logo from "../../images/logo.svg"
+import { LoggedInContext } from '../../contexts/LoggedInContext';
 
 
 function Navigation({ location }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const { loggedIn } = useContext(LoggedInContext);
 
   let content;
 
-if (location === 'home') {  
+// if (location === 'home') {
+  if ( !loggedIn ) {
   content = (
     <>
       <Link to="/">
@@ -20,14 +23,13 @@ if (location === 'home') {
           <Link className="navigation__registr" to={"/signin"}>Регистрация</Link>
           <Link className="navigation__signin" to={"/signup"}>Войти</Link> 
         </nav>
-      </div>
-          
+      </div>          
     </>
   );
 }
 
-if (location === 'main') {
-  
+// if (location === 'main') {
+  if ( loggedIn ) {  
   content = (    
     <>
     <div className="navigation" style={{ width: '100%' }}>
