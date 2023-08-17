@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 import {
   Route,
   Routes,
   useNavigate,
+  useLocation
 } from "react-router-dom";
 import Header from "./Header/Header";
 import Main  from "./Main/Main";
@@ -17,8 +18,6 @@ import InfoTooltip from './InfoTooltip/InfoTooltip';
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { LoggedInContext } from "../contexts/LoggedInContext";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
-
-
 import { register, authorization, authorize } from "../utils/Auth";
 import { getUserInformation, changeUserInformation } from "../utils/MainApi";
 import { getAllFilms } from "../utils/MoviesApi";
@@ -30,33 +29,50 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [registration, setRegistration] = useState(false);
   const [changeInformation, setChangeInformation] = useState(false);
-
+  const [lastVisitedPage, setLastVisitedPage] = useState("/");
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    setLastVisitedPage(location.pathname);
+  }, [location]);
+
+  // Сохранение в localStorage
+  useEffect(() => {
+    if (location.pathname !== lastVisitedPage) {
+      localStorage.setItem("lastVisitedPage", location.pathname);
+    }
+  }, [location, lastVisitedPage]);  
+
+  // Извлечение при загрузке
+  useEffect(() => {
+    const storedPage = localStorage.getItem("lastVisitedPage");
+    if (storedPage) {
+      setLastVisitedPage(storedPage);
+    }
+  }, []);
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const storedToken = localStorage.getItem("token");
+        const lastVisitedPage = localStorage.getItem("lastVisitedPage") || "/movies"; // Получение последней посещенной страницы
         if (storedToken) {
           const token = JSON.parse(storedToken);
-          await tokenCheck(token); // Ждем завершения проверки токена
-          // console.log(currentUser);
+          await tokenCheck(token);
           setLoggedIn(true);
-          navigate("/movies");
+          navigate(lastVisitedPage); // Перенаправление на последнюю посещенную страницу
         }
         if (loggedIn) {
-          // console.log(currentUser);
           const userData = await getUserInformation();
           await setCurrentUser(userData.data);
-
-          console.log(userData.data);
-          // const [userData, cards] = await Promise.all([
-          //   api.getUserInformation(),
-          //   api.getInitialCards(),
-          // ]);
-          // setCurrentUser(userData);
-          // setCards(cards.map((item) => item));
+        //   const [userData, cards] = await Promise.all([
+        //     api.getUserInformation(),
+        //     api.getInitialCards(),
+        //   ]);
+        //   setCards(cards.map((item) => item));
         }
       } catch (error) {
         console.log(error);
@@ -65,6 +81,7 @@ function App() {
   
     fetchData();
   }, [loggedIn]);
+  
 
   const tokenCheck = async (token) => {
     try {
@@ -154,8 +171,8 @@ function App() {
   }
 
   const handleLogout = () => {
-    console.log('привет пидор');
     localStorage.removeItem("token");
+    localStorage.removeItem("lastVisitedPage");
     setCurrentUser({});
     setLoggedIn(false);
     navigate("/");
