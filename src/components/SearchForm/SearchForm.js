@@ -3,7 +3,7 @@ import React from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import { useFormValidation } from "../../utils/useFormValidation";
 
-function SearchForm({ onGetFilms }) {
+function SearchForm({ onGetFilms, setIsLoading, setIsChecked, isChecked }) {
   const { values, errors, handleChange, setValue, setErrors, reset } = useFormValidation();
 
   const handleBlur = () => {
@@ -12,9 +12,9 @@ function SearchForm({ onGetFilms }) {
 
   function handleSubmit (evt) {
     evt.preventDefault();
-    console.log(values.filmName);
-    onGetFilms();
-
+    setIsLoading(true);
+    // console.log(values.filmName);
+    onGetFilms(values.filmName);
     reset();
   }
 
@@ -35,7 +35,10 @@ function SearchForm({ onGetFilms }) {
       </form>
       <span className="search-form__error">{errors["filmName"]}</span>
       <hr className="search-form__divider" />
-      <FilterCheckbox />
+      <FilterCheckbox
+        setIsChecked={setIsChecked}
+        isChecked={isChecked}
+      />
     </section>
   );
 }

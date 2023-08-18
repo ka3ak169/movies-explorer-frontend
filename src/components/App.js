@@ -1,20 +1,15 @@
-import { useState, useEffect} from 'react';
-import {
-  Route,
-  Routes,
-  useNavigate,
-  useLocation
-} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import Header from "./Header/Header";
-import Main  from "./Main/Main";
-import Movies  from "./Movies/Movies";
-import Footer from './Footer/Footer';
-import SavedMovies from './SavedMovies/SavedMovies';
-import Profile from './Profile/Profile';
-import Register from './Register/Register';
-import Login from './Login/Login';
-import NotFound from './NotFound/NotFound';
-import InfoTooltip from './InfoTooltip/InfoTooltip';
+import Main from "./Main/Main";
+import Movies from "./Movies/Movies";
+import Footer from "./Footer/Footer";
+import SavedMovies from "./SavedMovies/SavedMovies";
+import Profile from "./Profile/Profile";
+import Register from "./Register/Register";
+import Login from "./Login/Login";
+import NotFound from "./NotFound/NotFound";
+import InfoTooltip from "./InfoTooltip/InfoTooltip";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { LoggedInContext } from "../contexts/LoggedInContext";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
@@ -22,17 +17,58 @@ import { register, authorization, authorize } from "../utils/Auth";
 import { getUserInformation, changeUserInformation } from "../utils/MainApi";
 import { getAllFilms } from "../utils/MoviesApi";
 
-
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);// попап регистрации
   const [loggedIn, setLoggedIn] = useState(false);
-  const [registration, setRegistration] = useState(false);
-  const [changeInformation, setChangeInformation] = useState(false);
+  const [registration, setRegistration] = useState(false); //состояние попапа
+  const [changeInformation, setChangeInformation] = useState(false); //состояние попапа
   const [lastVisitedPage, setLastVisitedPage] = useState("/");
+  const [films, setFilms] = useState([]); //массив который отрендерится
+  const [allFilms, setAllFilms] = useState([]); //массив с сервера после фильтра запроса
+  const [savedFilms, setSavedFilms] = useState([]); //массив сохраненных фильмов
+  const [filmsToRender, setFilmsToRender] = useState([]); //массив фильмов для длинны и работы с ним до рендера
+  const [searching, setSearching] = useState(false); //обозначает факт поиска
+  const [nomatches, setNomatches] = useState(false); //состояние прелоадера
+  const [isLoading, setIsLoading] = useState(false); //состояние прелоадера
+  const [searchError, setSearchError] = useState(false); //состояние прелоадера
+  const [isChecked, setIsChecked] = useState(false); // состояние ползунка короткометражек
+  const [preloaderHidden, setPreloaderHidden] = useState(false); //состояние кнопки прелоадера
+  const [rowsToShow, setRowsToShow] = useState(getDefaultRows()); // количество карточек
 
   const navigate = useNavigate();
   const location = useLocation();
+  //количество карточек
+  function getDefaultRows() {
+    const width = window.innerWidth;
+    if (width >= 1280) return 16;
+    if (width >= 930) return 12;
+    if (width >= 750) return 8;
+    return 5;
+  }
+
+  useEffect(() => {
+    // Функция, которая будет вызываться при изменении размера окна
+    function handleResize() {
+      const newRowsToShow = getDefaultRows();
+      console.log("New rowsToShow:", newRowsToShow); // Выводим новое значение в консоль
+      setRowsToShow(newRowsToShow);
+    }
+
+    // Добавляем слушатель события resize
+    window.addEventListener("resize", handleResize);
+
+    // Удаляем слушатель события при размонтировании компонента
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  // управляет кнопкой прелоадера
+  useEffect(() => {
+    if (filmsToRender.length > rowsToShow) {
+      setPreloaderHidden(true);
+    }
+  }, [filmsToRender, rowsToShow, preloaderHidden]);
 
   useEffect(() => {
     setLastVisitedPage(location.pathname);
@@ -43,7 +79,7 @@ function App() {
     if (location.pathname !== lastVisitedPage) {
       localStorage.setItem("lastVisitedPage", location.pathname);
     }
-  }, [location, lastVisitedPage]);  
+  }, [location, lastVisitedPage]);
 
   // Извлечение при загрузке
   useEffect(() => {
@@ -53,12 +89,13 @@ function App() {
     }
   }, []);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const storedToken = localStorage.getItem("token");
-        const lastVisitedPage = localStorage.getItem("lastVisitedPage") || "/movies"; // Получение последней посещенной страницы
+        const storedToken = localStorage.getItem("token"); //получение токена
+        const lastVisitedPage =
+          localStorage.getItem("lastVisitedPage") || "/movies"; // Получение последней посещенной страницы
+        const lastSearchText = localStorage.getItem("lastSearchText"); // получение последнего запроса для отрисовки при загрузке
         if (storedToken) {
           const token = JSON.parse(storedToken);
           await tokenCheck(token);
@@ -68,29 +105,24 @@ function App() {
         if (loggedIn) {
           const userData = await getUserInformation();
           await setCurrentUser(userData.data);
-        //   const [userData, cards] = await Promise.all([
-        //     api.getUserInformation(),
-        //     api.getInitialCards(),
-        //   ]);
-        //   setCards(cards.map((item) => item));
+        }
+        if (lastSearchText) {
+          getSearchFilms(lastSearchText);
         }
       } catch (error) {
         console.log(error);
       }
     };
-  
+
     fetchData();
   }, [loggedIn]);
-  
 
   const tokenCheck = async (token) => {
     try {
       const result = await authorize(token);
       if (result !== null && result.data !== null) {
-        // console.log(result.data);
-        // console.log(currentUser);
         setLoggedIn(true);
-        // api.setToken(token); НЕ ПОНЯТНО ЗАЧЕМ НУЖНО
+        // api.setToken(token);
       }
     } catch (error) {
       console.log("Токена не существует");
@@ -101,11 +133,26 @@ function App() {
     setIsInfoTooltipPopupOpen(false);
   };
 
+  const handlePreloaderButton = () => {
+    const width = window.innerWidth;
+
+    if (width < 930 && filmsToRender.length > rowsToShow) {
+      setRowsToShow(rowsToShow + 2);
+    } else if (width < 1280 && filmsToRender.length > rowsToShow) {
+      setRowsToShow(rowsToShow + 3);
+    } else if (width >= 1280 && filmsToRender.length > rowsToShow) {
+      setRowsToShow(rowsToShow + 4);
+    }
+
+    // Проверяем, достигло ли значение rowsToShow необходимого порога
+    if (rowsToShow + 4 >= filmsToRender.length) {
+      setPreloaderHidden(false);
+    }
+  };
+
   const handleRegisterSubmit = (name, email, password) => {
-    // console.log(name, email, password);
     register(name, email, password)
       .then((result) => {
-        // console.log(result);
         setRegistration(true);
         setIsInfoTooltipPopupOpen(true);
         setTimeout(() => {
@@ -123,12 +170,10 @@ function App() {
         }, 2000);
       });
   };
-  
+
   const handleLoginSubmit = (email, password) => {
-    // console.log(email, password);
     authorization(email, password)
       .then((result) => {
-        // console.log(result);
         localStorage.setItem("token", JSON.stringify(result.token));
         setLoggedIn(true);
         navigate("/movies");
@@ -146,50 +191,98 @@ function App() {
 
   const updateUserInformation = (data) => {
     changeUserInformation(data)
-    .then((result) => {
-      console.log(result);
-      setRegistration(true);
-      setChangeInformation(true);
-      setIsInfoTooltipPopupOpen(true);
-      setCurrentUser(data);
-      setTimeout(() => {        
-        closeAllPopups();        
-      }, 2000);
-      setTimeout(() => {
-        setChangeInformation(false);
-      }, 3000)
-    })
-    .catch((error) => {
-      // Обработка ошибки
-      console.log(error);
-      setRegistration(false);
-      setIsInfoTooltipPopupOpen(true);
-      setTimeout(() => {
-        closeAllPopups();
-      }, 2000);
-    });
-  }
+      .then((result) => {
+        // console.log(result);
+        setRegistration(true);
+        setChangeInformation(true);
+        setIsInfoTooltipPopupOpen(true);
+        setCurrentUser(data);
+        setTimeout(() => {
+          closeAllPopups();
+        }, 2000);
+        setTimeout(() => {
+          setChangeInformation(false);
+        }, 3000);
+      })
+      .catch((error) => {
+        // Обработка ошибки
+        console.log(error);
+        setRegistration(false);
+        setIsInfoTooltipPopupOpen(true);
+        setTimeout(() => {
+          closeAllPopups();
+        }, 2000);
+      });
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("lastVisitedPage");
+    localStorage.removeItem("lastSearchText");
     setCurrentUser({});
     setLoggedIn(false);
     navigate("/");
   };
+  //отрисовка фильмов
+  const renderFilms = (films, isChecked) => {
+    const filmsToRender = isChecked
+      ? films
+      : films.filter((film) => film.duration > 52);
+    setFilmsToRender(filmsToRender);
+    setFilms(filmsToRender.slice(0, rowsToShow));
+  };
 
-  const getInitialFilms = () => {    
+  useEffect(() => {
+    // Эта функция будет вызвана, когда allFilms или isChecked изменятся
+    const renderFilms = () => {
+      const filmsToRender = isChecked
+        ? allFilms
+        : allFilms.filter((film) => film.duration > 52);
+      setFilms(filmsToRender.slice(0, rowsToShow)); // Предполагая, что setFilms обновляет состояние, которое используется для отображения фильмов
+    };
+
+    renderFilms(); // Вызываем функцию рендеринга сразу, чтобы отобразить фильмы
+  }, [allFilms, isChecked, rowsToShow]);
+
+  const filterFilms = (films, searchText) => {
+    return films.filter(
+      (film) =>
+        (film.description &&
+          film.description.toLowerCase().includes(searchText)) ||
+        (film.nameRU && film.nameRU.toLowerCase().includes(searchText)) ||
+        (film.nameEN && film.nameEN.toLowerCase().includes(searchText)) ||
+        (film.director && film.director.toLowerCase().includes(searchText)) ||
+        (film.country && film.country.toLowerCase().includes(searchText)) ||
+        (film.year && film.year.toString().includes(searchText))
+    );
+  };
+  // логика по нажатию на поиск
+  const getSearchFilms = (text) => {
+    setFilms([]);
+    // console.log(text);
     getAllFilms()
-    .then((result) => {
-      console.log(result);
-      
-    })
-    .catch((error) => {
-      // Обработка ошибки
-      console.log(error);
-      
-    });
-  }
+      .then((result) => {
+        localStorage.setItem("lastSearchText", text);
+        setIsLoading(false);
+        setSearching(true);
+        const searchText = text.toLowerCase();
+        const filteredFilms = filterFilms(result, searchText);
+        setAllFilms(filteredFilms);
+        if (filteredFilms.length === 0) {
+          setNomatches(true);
+          setFilms([]);
+          console.log("ничего не нашел");
+        } else {
+          setNomatches(false);
+          renderFilms(filteredFilms, isChecked);
+        }
+      })
+      .catch((error) => {
+        // Обработка ошибки
+        console.log(error);
+        setSearchError(true);
+      });
+  };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -200,11 +293,9 @@ function App() {
               path="/"
               element={
                 <>
-                  <Header
-                    location={"home"}
-                  />
-                  <Main/>
-                  <Footer/>
+                  <Header location={"home"} />
+                  <Main />
+                  <Footer />
                 </>
               }
             />
@@ -212,21 +303,24 @@ function App() {
               path="/movies"
               element={
                 <>
-                  <Header
-                    location={"main"}
-                  />
+                  <Header location={"main"} />
                   <ProtectedRoute
-                    // loggedIn={loggedIn}
                     element={Movies}
-                    onGetFilms={getInitialFilms}
-                    // onAddPlace={handleAddPlaceClick}
-                    // onEditAvatar={handleEditAvatarClick}
-                    // onCardClick={handleCardClick}
-                    // onCardLike={handleCardLike}
-                    // onCardDelete={handleCardDelete}
-                    // cards={cards}
+                    onGetFilms={getSearchFilms}
+                    setIsLoading={setIsLoading}
+                    isLoading={isLoading}
+                    searchError={searchError}
+                    setIsChecked={setIsChecked}
+                    isChecked={isChecked}
+                    rowsToShow={rowsToShow}
+                    nomatches={nomatches}
+                    searching={searching}
+                    films={films}
+                    filmsToRender={filmsToRender}
+                    preloaderHidden={preloaderHidden}
+                    onPreloader={handlePreloaderButton}
                   />
-                  <Footer/>
+                  <Footer />
                 </>
               }
             />
@@ -234,12 +328,13 @@ function App() {
               path="/saved-movies"
               element={
                 <>
-                  <Header location={"main"}/>
+                  <Header location={"main"} />
                   <ProtectedRoute
                     element={SavedMovies}
                     location={"saved"}
+                    savedFilms={savedFilms}
                   />
-                  <Footer/>
+                  <Footer />
                 </>
               }
             />
@@ -247,7 +342,7 @@ function App() {
               path="/profile"
               element={
                 <>
-                  <Header  location={"main"}/>
+                  <Header location={"main"} />
                   <ProtectedRoute
                     element={Profile}
                     onChangeInformation={updateUserInformation}
@@ -260,9 +355,7 @@ function App() {
               path="/signin"
               element={
                 <>
-                  <Register
-                    onSubmit={handleRegisterSubmit}
-                  />
+                  <Register onSubmit={handleRegisterSubmit} />
                 </>
               }
             />
@@ -270,9 +363,7 @@ function App() {
               path="/signup"
               element={
                 <>
-                  <Login
-                    onSubmit={handleLoginSubmit}
-                  />
+                  <Login onSubmit={handleLoginSubmit} />
                 </>
               }
             />
@@ -280,17 +371,17 @@ function App() {
               path="*"
               element={
                 <>
-                  <NotFound/>
+                  <NotFound />
                 </>
               }
             />
           </Routes>
           <InfoTooltip
-                registration={registration}
-                changeInformation={changeInformation}
-                isOpen={isInfoTooltipPopupOpen}
-                onClose={closeAllPopups}
-              />
+            registration={registration}
+            changeInformation={changeInformation}
+            isOpen={isInfoTooltipPopupOpen}
+            onClose={closeAllPopups}
+          />
         </div>
       </LoggedInContext.Provider>
     </CurrentUserContext.Provider>

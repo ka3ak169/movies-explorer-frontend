@@ -97,6 +97,7 @@
 @import url(./components/FilterCheckbox/styles/__switch/filterCheckbox__switch.css);
 /* moviesCardList */
 @import url(./components/MoviesCardList/styles/moviesCardList.css);
+@import url(./components/MoviesCardList/styles/__error/moviesCardList__error.css);
 /* moviesCard */
 @import url(./components/MoviesCard/styles/moviesCard.css);
 @import url(./components/MoviesCard/styles/__container/moviesCard__container.css);
@@ -110,6 +111,9 @@
 /* preloader */
 @import url(./components/Preloader/styles/preloader.css);
 @import url(./components/Preloader/styles/__btn/preloader__btn.css);
+@import url(./components/Preloader/styles/__nomatches/preloader__nomatches.css);
+@import url(./components/Preloader/styles/__item/preloader__item.css);
+@import url(./components/Preloader/styles/__row/preloader__row.css);
 /* profile */
 @import url(./components/Profile/styles/profile.css);
 @import url(./components/Profile/styles/__edit-btn/profile__edit-btn.css);
