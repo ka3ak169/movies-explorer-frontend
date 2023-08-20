@@ -14,13 +14,18 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { LoggedInContext } from "../contexts/LoggedInContext";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import { register, authorization, authorize } from "../utils/Auth";
-import { getUserInformation, changeUserInformation, postFavoriteMovies, deleteFavoriteMovies, getInitialFilms } from "../utils/MainApi";
+import {
+  getUserInformation,
+  changeUserInformation,
+  postFavoriteMovies,
+  deleteFavoriteMovies,
+  getInitialFilms,
+} from "../utils/MainApi";
 import { getAllFilms } from "../utils/MoviesApi";
-import {testfilms} from '../utils/utils'
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);// попап регистрации
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false); // попап регистрации
   const [loggedIn, setLoggedIn] = useState(false);
   const [registration, setRegistration] = useState(false); //состояние попапа
   const [changeInformation, setChangeInformation] = useState(false); //состояние попапа
@@ -37,12 +42,6 @@ function App() {
   const [isChecked, setIsChecked] = useState(false); // состояние ползунка короткометражек
   const [preloaderHidden, setPreloaderHidden] = useState(false); //состояние кнопки прелоадера
   const [rowsToShow, setRowsToShow] = useState(getDefaultRows()); // количество карточек
-  // console.log(testfilms);
-
-  const [testfilms2, setTestfilms2] = useState(testfilms); //массив который отрендерится
-
-
-  // console.log(savedFilms);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -54,33 +53,22 @@ function App() {
     if (width >= 750) return 8;
     return 5;
   }
-  // Получаем массив сохраненных фильмов
-  useEffect(() => {
-    getInintialSavedFilms();
-    // console.log(savedFilms);
-    // console.log('666');
-  }, [loggedIn]);
 
   const getInintialSavedFilms = () => {
     getInitialFilms()
-    .then((result) => {
-      console.log('что за хуйня!');
-      setSavedFilms(result)
-      setFilteredSavedFilms(result)
-      console.log(filteredSavedFilms);
-      // console.log(result);
-    })
-    .catch((error) => {
-      // Обработка ошибки
-      console.log(error);
-    });
-  }
+      .then((result) => {
+        setSavedFilms(result);
+      })
+      .catch((error) => {
+        // Обработка ошибки
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     // Функция, которая будет вызываться при изменении размера окна
     function handleResize() {
       const newRowsToShow = getDefaultRows();
-      // console.log("New rowsToShow:", newRowsToShow); // Выводим новое значение в консоль
       setRowsToShow(newRowsToShow);
     }
 
@@ -119,6 +107,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    getInintialSavedFilms();
     const fetchData = async () => {
       try {
         const storedToken = localStorage.getItem("token"); //получение токена
@@ -129,6 +118,7 @@ function App() {
           const token = JSON.parse(storedToken);
           await tokenCheck(token);
           setLoggedIn(true);
+
           navigate(lastVisitedPage); // Перенаправление на последнюю посещенную страницу
         }
         if (loggedIn) {
@@ -151,7 +141,6 @@ function App() {
       const result = await authorize(token);
       if (result !== null && result.data !== null) {
         setLoggedIn(true);
-        // api.setToken(token);
       }
     } catch (error) {
       console.log("Токена не существует");
@@ -204,9 +193,7 @@ function App() {
     authorization(email, password)
       .then((result) => {
         localStorage.setItem("token", JSON.stringify(result.token));
-        // console.log(result);
         setLoggedIn(true);
-        getInintialSavedFilms();
         navigate("/movies");
       })
       .catch((error) => {
@@ -223,7 +210,6 @@ function App() {
   const updateUserInformation = (data) => {
     changeUserInformation(data)
       .then((result) => {
-        // console.log(result);
         setRegistration(true);
         setChangeInformation(true);
         setIsInfoTooltipPopupOpen(true);
@@ -247,17 +233,13 @@ function App() {
   };
 
   const addFavoriteMovies = (film, owner) => {
-    // console.log(film);
     postFavoriteMovies(film, owner)
-    .then((result) => {
-      // console.log(result);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-  }
-  
-
+      .then((result) => {
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -265,29 +247,14 @@ function App() {
     localStorage.removeItem("lastSearchText");
     setCurrentUser({});
     setLoggedIn(false);
-    setFilteredSavedFilms([]);   
+    setFilteredSavedFilms([]);
     setAllFilms([]);
+    setSavedFilms([]);
     setFilmsToRender([]);
     setIsChecked(false);
     setFilms([]);
     navigate("/");
   };
-
-  // // функция фильтрации по времени
-  // const filterDurationFilms = (films, isChecked) => {
-  //   return isChecked ? films : films.filter(f => f.duration > 52);
-  // }
-  
-  // // перерендер при изменении чекбокса
-  // useEffect(() => {
-
-  //   const filmsToRender = filterDurationFilms(allFilms, isChecked);
-  //   setFilms(filmsToRender.slice(0, rowsToShow));
-  
-  //   const savedToRender = filterDurationFilms(savedFilms, isChecked); 
-  //   setFilteredSavedFilms(savedToRender);
-  
-  // }, [allFilms, savedFilms, isChecked, rowsToShow])
 
   //отрисовка фильмов
   const renderFilms = (films, isChecked) => {
@@ -299,13 +266,13 @@ function App() {
   };
 
   const filterSavedFilms = (films, isShort) => {
-    return isShort ? films : films.filter(f => f.duration > 52); 
-  }
+    return isShort ? films : films.filter((f) => f.duration > 52);
+  };
 
   useEffect(() => {
     const filtered = filterSavedFilms(savedFilms, isChecked);
     setFilteredSavedFilms(filtered);
-  }, [savedFilms, isChecked, loggedIn])
+  }, [savedFilms, isChecked, loggedIn]);
 
   useEffect(() => {
     // Эта функция будет вызвана, когда allFilms или isChecked изменятся
@@ -317,7 +284,7 @@ function App() {
     };
 
     renderFilms(); // Вызываем функцию рендеринга сразу, чтобы отобразить фильмы
-  }, [allFilms, isChecked, rowsToShow, loggedIn]);
+  }, [allFilms, isChecked, rowsToShow, loggedIn, savedFilms]);
 
   const filterFilms = (films, searchText) => {
     return films.filter(
@@ -334,16 +301,14 @@ function App() {
   // логика по нажатию на поиск
   const getSearchFilms = (text) => {
     setFilms([]);
-    // console.log(text);
     setIsLoading(true);
-      // Установка таймаута в 20 секунд
+    // Установка таймаута в 20 секунд
     const timeoutId = setTimeout(() => {
       console.log("Поиск занимает слишком много времени!");
       setSearchError(true);
     }, 20000);
     getAllFilms()
       .then((result) => {
-        // console.log(result);
         clearTimeout(timeoutId);
         localStorage.setItem("lastSearchText", text);
         setIsLoading(false);
@@ -426,8 +391,7 @@ function App() {
                     isChecked={isChecked}
                     savedFilms={filteredSavedFilms}
                     onDelFilm={deleteFavoriteMovies}
-                    onInitialFilm={getInintialSavedFilms}
-                    // testfilms={testfilms2}
+                    onInitialFilm={getInintialSavedFilms}   
                   />
                   <Footer />
                 </>

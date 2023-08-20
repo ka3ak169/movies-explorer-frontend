@@ -22,7 +22,6 @@ function Movies({
   savedFilms,
   onInitialFilm,
 }) {
-  // console.log(onInitialFilm);
 
   return (
     <main className="main">
@@ -48,9 +47,6 @@ function Movies({
         isLoading={isLoading}
         nomatches={nomatches}
         searching={searching}
-        rowsToShow={rowsToShow}
-        films={films}
-        filmsToRender={filmsToRender}
         preloaderHidden={preloaderHidden}
         onPreloader={onPreloader}
       />

@@ -13,8 +13,6 @@ function SavedMovies({
   setIsChecked,
   isChecked
 }) {
-  // console.log(testfilms);
-  // console.log(savedFilms);
 
   return (
     <main className="main">

@@ -7,9 +7,7 @@ function Register({ onSubmit }) {
 
   function handleSubmit (evt) {
     evt.preventDefault();
-    // console.log(isValid);
 
-    // console.log(values["registerName"], values["registerEmail"], values["registerPassword"]);
     onSubmit(values["registerName"], values["registerEmail"], values["registerPassword"]);
     reset();
   }

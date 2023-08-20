@@ -4,7 +4,7 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import { useFormValidation } from "../../utils/useFormValidation";
 
 function SearchForm({ onGetFilms, setIsLoading, setIsChecked, isChecked }) {
-  const { values, errors, handleChange, setValue, setErrors, reset } = useFormValidation();
+  const { values, errors, handleChange, setErrors, reset } = useFormValidation();
 
   const handleBlur = () => {
     setErrors((oldErrors) => ({ ...oldErrors, filmName: "" })); // Устанавливаем ошибку для filmName в пустую строку
@@ -13,7 +13,6 @@ function SearchForm({ onGetFilms, setIsLoading, setIsChecked, isChecked }) {
   function handleSubmit (evt) {
     evt.preventDefault();
     setIsLoading(true);
-    // console.log(values.filmName);
     onGetFilms(values.filmName);
     reset();
   }

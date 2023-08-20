@@ -16,10 +16,13 @@ function Profile({ onChangeInformation, onLogout}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(values.profileName, values.profileEmail);
     const newData = {name: values.profileName, email:values.profileEmail};    
     onChangeInformation(newData)
+  };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    onLogout();
   };
 
   return (
@@ -65,7 +68,7 @@ function Profile({ onChangeInformation, onLogout}) {
           <button className="profile__edit-btn" id="editBtn" type="submit" onSubmit={handleSubmit}>
             Редактировать
           </button>
-          <button className="profile__exit-btn" type="button" id="exitBtn" onClick={onLogout}>
+          <button className="profile__exit-btn" type="button" id="exitBtn" onClick={handleLogout}>
             Выйти из аккаунта
           </button>
         </div>

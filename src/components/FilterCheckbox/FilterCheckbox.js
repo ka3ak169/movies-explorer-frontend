@@ -4,7 +4,6 @@ import React from "react";
 function FilterCheckbox({ setIsChecked, isChecked }) {
   const handleCheckboxChange = (event) => {
     setIsChecked(event.target.checked);
-    // console.log(isChecked);
   };
 
   return (
@@ -13,7 +12,6 @@ function FilterCheckbox({ setIsChecked, isChecked }) {
         <input
           className="filterCheckbox__checkbox"
           type="checkbox"
-          // defaultChecked={false}
           onChange={handleCheckboxChange}
           checked={isChecked}
         />

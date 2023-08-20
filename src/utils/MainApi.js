@@ -3,20 +3,36 @@ import { movieApiPart } from './utils';
 
 
 // Создание объекта headers с заголовками запроса
-const headers = {
-  "Content-Type": "application/json",
-};
+// const headers = {
+//   "Content-Type": "application/json",
+// };
 
 // Получение токена из localStorage
-const storedToken = localStorage.getItem("token");
+// const storedToken = localStorage.getItem("token");
 
-// Если в localStorage есть токен, добавляем его в заголовки
-if (storedToken && storedToken !== "null" && storedToken !== "undefined") {
-  const token = JSON.parse(storedToken);
-  headers.authorization = `Bearer ${token}`;
-} else {
-  console.log('Token не существует');
-}
+// // Если в localStorage есть токен, добавляем его в заголовки
+// if (storedToken && storedToken !== "null" && storedToken !== "undefined") {
+//   console.log('storedToken ' + storedToken);
+//   const token = JSON.parse(storedToken);
+//   console.log('token' + token);
+
+//   headers.authorization = `Bearer ${token}`;
+// } else {
+//   console.log('Token не существует');
+// }
+
+const getHeaders = () => {
+  const storedToken = localStorage.getItem("token");
+  let token;
+  if (storedToken && storedToken !== "null" && storedToken !== "undefined") {
+    token = JSON.parse(storedToken);
+  }
+
+  return {
+    "Content-Type": "application/json",
+    "Authorization": token ? `Bearer ${token}` : undefined
+  };
+};
 
 const checkResponse = (response) => {
   if (response.ok) {
@@ -25,20 +41,22 @@ const checkResponse = (response) => {
   return Promise.reject(new Error(`Ошибка ${response.status}: ${response.statusText}`));
 };
 
+// получаем информацию 
 export const getUserInformation = () => {
   return fetch(`${apiUrl}/users/me`, {
-    headers: headers
+    headers: getHeaders() // Используем функцию для получения актуальных заголовков
   })
   .then(checkResponse)
   .then(data => {
-    return data; // Возвращаем результат для дальнейшей обработки
+    return data; 
   });
-}
+};
 
+// меняем информацию
 export const changeUserInformation = (data) => {
   return fetch(`${apiUrl}/users/me`, {
     method: 'PATCH',
-    headers: headers,
+    headers: getHeaders(), // Используем функцию для получения актуальных заголовков
     body: JSON.stringify({
       name: data.name,
       email: data.email
@@ -47,12 +65,14 @@ export const changeUserInformation = (data) => {
   .then(checkResponse);
 }
 
+// добавляем в избранное
 export const postFavoriteMovies = (data, owner) => {
   console.log(data);
   console.log(movieApiPart + data.image.url);
+
   return fetch(`${apiUrl}/movies`, {
     method: 'POST',
-    headers: headers,
+    headers: getHeaders(), // Используем функцию для получения актуальных заголовков
     body: JSON.stringify({
       country: data.country,
       director: data.director,
@@ -71,22 +91,20 @@ export const postFavoriteMovies = (data, owner) => {
   .then(checkResponse);
 }
 
+// удаляем лайкнутые
 export const deleteFavoriteMovies = (movieId) => {
   return fetch(`${apiUrl}/movies/${movieId}`, {
     method: 'DELETE',
-    headers: headers 
+    headers: getHeaders() // Используем функцию для получения актуальных заголовков
   })
   .then(checkResponse);
 }
 
+// получаем свои фильмы
 export const getInitialFilms = () => {
   return fetch(`${apiUrl}/movies`, {
-    method: 'GET', 
-    headers: headers 
+    method: 'GET',
+    headers: getHeaders() // Используем функцию для получения актуальных заголовков
   })
   .then(checkResponse);
-}
-
-
-
-
+};

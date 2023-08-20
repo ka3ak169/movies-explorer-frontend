@@ -7,10 +7,6 @@ import { movieApiPart } from "../../utils/utils";
 
 function MoviesCard({ location, film, onAddFilm, onDelFilm, filmsToRender, savedFilms, onInitialFilm }) {
   const [cardIsActive, setCardIsActive] = useState(false);
-  // console.log(onInitialFilm);
-  // console.log(film);
-  // console.log(savedFilms);
-
   const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
@@ -36,22 +32,17 @@ function MoviesCard({ location, film, onAddFilm, onDelFilm, filmsToRender, saved
   }
 
   function handleFavoriteSubmit() {
-    console.log("FAVORITE");
     setCardIsActive(!cardIsActive);
-    // console.log(film._id);
     onAddFilm(film, currentUser._id);
     onInitialFilm();
   }
 
   function handleDeleteSubmit() {
-    console.log("DELETE");
       // Найти элемент в savedFilms, у которого movieId совпадает с film.id
       const savedFilm = savedFilms.find(savedFilm => savedFilm.movieId === film.id);
     if (savedFilm) { // Проверка на случай, если совпадение не найдено
-      console.log(savedFilm._id); // Вывести _id найденного элемента
       onDelFilm(savedFilm._id)
       .then((result) => {
-        console.log(result);
         setCardIsActive(false);
         onInitialFilm();
       })
@@ -65,11 +56,8 @@ function MoviesCard({ location, film, onAddFilm, onDelFilm, filmsToRender, saved
   }
 
   function handleDeleteFavoriteSubmit() {
-    console.log("DELETE FAVORITE");
-    console.log(film._id);
     onDelFilm(film._id)
       .then((result) => {
-        console.log(result);
         onInitialFilm();
       })
       .catch((error) => {

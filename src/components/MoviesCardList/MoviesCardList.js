@@ -11,7 +11,7 @@ function MoviesCardList({
   savedFilms,
   onInitialFilm
 }) {
-  // console.log(onInitialFilm);
+
   if (searchError) {
     return (
       <section className="moviesCardList" style={{ display: "flex" }}>

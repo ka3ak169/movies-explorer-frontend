@@ -11,7 +11,6 @@ function Navigation({ location }) {
 
   let content;
 
-// if (location === 'home') {
   if ( !loggedIn ) {
   content = (
     <>
@@ -28,7 +27,6 @@ function Navigation({ location }) {
   );
 }
 
-// if (location === 'main') {
   if ( loggedIn ) {  
   content = (    
     <>
