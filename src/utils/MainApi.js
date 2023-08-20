@@ -1,4 +1,6 @@
 import apiUrl from './utils';
+import { movieApiPart } from './utils';
+
 
 // Создание объекта headers с заголовками запроса
 const headers = {
@@ -44,6 +46,47 @@ export const changeUserInformation = (data) => {
   })
   .then(checkResponse);
 }
+
+export const postFavoriteMovies = (data, owner) => {
+  console.log(data);
+  console.log(movieApiPart + data.image.url);
+  return fetch(`${apiUrl}/movies`, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify({
+      country: data.country,
+      director: data.director,
+      duration: data.duration,
+      year: data.year,
+      description: data.description,
+      image: movieApiPart + data.image.url,
+      trailerLink: data.trailerLink,
+      thumbnail: movieApiPart + data.image.formats.thumbnail.url,
+      movieId: data.id,
+      nameRU: data.nameRU,
+      nameEN: data.nameEN,
+      owner: owner
+    })
+  })
+  .then(checkResponse);
+}
+
+export const deleteFavoriteMovies = (movieId) => {
+  return fetch(`${apiUrl}/movies/${movieId}`, {
+    method: 'DELETE',
+    headers: headers 
+  })
+  .then(checkResponse);
+}
+
+export const getInitialFilms = () => {
+  return fetch(`${apiUrl}/movies`, {
+    method: 'GET', 
+    headers: headers 
+  })
+  .then(checkResponse);
+}
+
 
 
 

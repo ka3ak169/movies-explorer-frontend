@@ -1,11 +1,17 @@
 import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
-// import pic2 from '../../images/5f04b056ccd99.jpg';
-// import pic3 from '../../images/Mad Max- Fury Road(1).jpg';
-// import pic4 from '../../images/movies_02.jpg';
 
-function MoviesCardList({ location, films, searchError }) {
-  // console.log(films);
+function MoviesCardList({
+  location,
+  films,
+  searchError,
+  onAddFilm,
+  onDelFilm,
+  filmsToRender,
+  savedFilms,
+  onInitialFilm
+}) {
+  // console.log(onInitialFilm);
   if (searchError) {
     return (
       <section className="moviesCardList" style={{ display: "flex" }}>
@@ -19,7 +25,16 @@ function MoviesCardList({ location, films, searchError }) {
     return (
       <section className="moviesCardList">
         {films.map((film) => (
-          <MoviesCard key={film.id} film={film} location={location} />
+          <MoviesCard
+            key={film._id || film.id}
+            film={film}
+            location={location}
+            onAddFilm={onAddFilm}
+            onDelFilm={onDelFilm}
+            filmsToRender={filmsToRender}
+            savedFilms={savedFilms}
+            onInitialFilm={onInitialFilm}
+          />
         ))}
       </section>
     );

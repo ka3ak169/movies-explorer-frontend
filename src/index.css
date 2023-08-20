@@ -101,10 +101,11 @@
 /* moviesCard */
 @import url(./components/MoviesCard/styles/moviesCard.css);
 @import url(./components/MoviesCard/styles/__container/moviesCard__container.css);
+@import url(./components/MoviesCard/styles/__trailerLink/moviesCard__trailerLink.css);
 @import url(./components/MoviesCard/styles/__description/moviesCard__description.css);
 @import url(./components/MoviesCard/styles/__duration/moviesCard__duration.css);
 @import url(./components/MoviesCard/styles/__button/moviesCard__button.css);
-@import url(./components/MoviesCard/styles/__button/_active/moviesCard__button_avtive.css);
+@import url(./components/MoviesCard/styles/__button/_active/moviesCard__button_aсtive.css);
 @import url(./components/MoviesCard/styles/__button/_delete/moviesCard__button_delete.css);
 @import url(./components/MoviesCard/styles/__img/moviesCard__img.css);
 @import url(./components/MoviesCard/styles/__name/moviesCard__name.css);

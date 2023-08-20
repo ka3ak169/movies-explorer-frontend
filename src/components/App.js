@@ -14,8 +14,9 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { LoggedInContext } from "../contexts/LoggedInContext";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import { register, authorization, authorize } from "../utils/Auth";
-import { getUserInformation, changeUserInformation } from "../utils/MainApi";
+import { getUserInformation, changeUserInformation, postFavoriteMovies, deleteFavoriteMovies, getInitialFilms } from "../utils/MainApi";
 import { getAllFilms } from "../utils/MoviesApi";
+import {testfilms} from '../utils/utils'
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -27,6 +28,7 @@ function App() {
   const [films, setFilms] = useState([]); //массив который отрендерится
   const [allFilms, setAllFilms] = useState([]); //массив с сервера после фильтра запроса
   const [savedFilms, setSavedFilms] = useState([]); //массив сохраненных фильмов
+  const [filteredSavedFilms, setFilteredSavedFilms] = useState([]); // отфильтрованные сохраненные
   const [filmsToRender, setFilmsToRender] = useState([]); //массив фильмов для длинны и работы с ним до рендера
   const [searching, setSearching] = useState(false); //обозначает факт поиска
   const [nomatches, setNomatches] = useState(false); //состояние прелоадера
@@ -35,6 +37,12 @@ function App() {
   const [isChecked, setIsChecked] = useState(false); // состояние ползунка короткометражек
   const [preloaderHidden, setPreloaderHidden] = useState(false); //состояние кнопки прелоадера
   const [rowsToShow, setRowsToShow] = useState(getDefaultRows()); // количество карточек
+  // console.log(testfilms);
+
+  const [testfilms2, setTestfilms2] = useState(testfilms); //массив который отрендерится
+
+
+  // console.log(savedFilms);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -46,12 +54,33 @@ function App() {
     if (width >= 750) return 8;
     return 5;
   }
+  // Получаем массив сохраненных фильмов
+  useEffect(() => {
+    getInintialSavedFilms();
+    // console.log(savedFilms);
+    // console.log('666');
+  }, [loggedIn]);
+
+  const getInintialSavedFilms = () => {
+    getInitialFilms()
+    .then((result) => {
+      console.log('что за хуйня!');
+      setSavedFilms(result)
+      setFilteredSavedFilms(result)
+      console.log(filteredSavedFilms);
+      // console.log(result);
+    })
+    .catch((error) => {
+      // Обработка ошибки
+      console.log(error);
+    });
+  }
 
   useEffect(() => {
     // Функция, которая будет вызываться при изменении размера окна
     function handleResize() {
       const newRowsToShow = getDefaultRows();
-      console.log("New rowsToShow:", newRowsToShow); // Выводим новое значение в консоль
+      // console.log("New rowsToShow:", newRowsToShow); // Выводим новое значение в консоль
       setRowsToShow(newRowsToShow);
     }
 
@@ -104,16 +133,16 @@ function App() {
         }
         if (loggedIn) {
           const userData = await getUserInformation();
-          await setCurrentUser(userData.data);
+          setCurrentUser(userData.data);
         }
         if (lastSearchText) {
+          setIsLoading(true);
           getSearchFilms(lastSearchText);
         }
       } catch (error) {
         console.log(error);
       }
     };
-
     fetchData();
   }, [loggedIn]);
 
@@ -175,7 +204,9 @@ function App() {
     authorization(email, password)
       .then((result) => {
         localStorage.setItem("token", JSON.stringify(result.token));
+        // console.log(result);
         setLoggedIn(true);
+        getInintialSavedFilms();
         navigate("/movies");
       })
       .catch((error) => {
@@ -215,14 +246,49 @@ function App() {
       });
   };
 
+  const addFavoriteMovies = (film, owner) => {
+    // console.log(film);
+    postFavoriteMovies(film, owner)
+    .then((result) => {
+      // console.log(result);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
+  
+
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("lastVisitedPage");
     localStorage.removeItem("lastSearchText");
     setCurrentUser({});
     setLoggedIn(false);
+    setFilteredSavedFilms([]);   
+    setAllFilms([]);
+    setFilmsToRender([]);
+    setIsChecked(false);
+    setFilms([]);
     navigate("/");
   };
+
+  // // функция фильтрации по времени
+  // const filterDurationFilms = (films, isChecked) => {
+  //   return isChecked ? films : films.filter(f => f.duration > 52);
+  // }
+  
+  // // перерендер при изменении чекбокса
+  // useEffect(() => {
+
+  //   const filmsToRender = filterDurationFilms(allFilms, isChecked);
+  //   setFilms(filmsToRender.slice(0, rowsToShow));
+  
+  //   const savedToRender = filterDurationFilms(savedFilms, isChecked); 
+  //   setFilteredSavedFilms(savedToRender);
+  
+  // }, [allFilms, savedFilms, isChecked, rowsToShow])
+
   //отрисовка фильмов
   const renderFilms = (films, isChecked) => {
     const filmsToRender = isChecked
@@ -232,17 +298,26 @@ function App() {
     setFilms(filmsToRender.slice(0, rowsToShow));
   };
 
+  const filterSavedFilms = (films, isShort) => {
+    return isShort ? films : films.filter(f => f.duration > 52); 
+  }
+
+  useEffect(() => {
+    const filtered = filterSavedFilms(savedFilms, isChecked);
+    setFilteredSavedFilms(filtered);
+  }, [savedFilms, isChecked, loggedIn])
+
   useEffect(() => {
     // Эта функция будет вызвана, когда allFilms или isChecked изменятся
     const renderFilms = () => {
       const filmsToRender = isChecked
         ? allFilms
         : allFilms.filter((film) => film.duration > 52);
-      setFilms(filmsToRender.slice(0, rowsToShow)); // Предполагая, что setFilms обновляет состояние, которое используется для отображения фильмов
+      setFilms(filmsToRender.slice(0, rowsToShow));
     };
 
     renderFilms(); // Вызываем функцию рендеринга сразу, чтобы отобразить фильмы
-  }, [allFilms, isChecked, rowsToShow]);
+  }, [allFilms, isChecked, rowsToShow, loggedIn]);
 
   const filterFilms = (films, searchText) => {
     return films.filter(
@@ -260,8 +335,16 @@ function App() {
   const getSearchFilms = (text) => {
     setFilms([]);
     // console.log(text);
+    setIsLoading(true);
+      // Установка таймаута в 20 секунд
+    const timeoutId = setTimeout(() => {
+      console.log("Поиск занимает слишком много времени!");
+      setSearchError(true);
+    }, 20000);
     getAllFilms()
       .then((result) => {
+        // console.log(result);
+        clearTimeout(timeoutId);
         localStorage.setItem("lastSearchText", text);
         setIsLoading(false);
         setSearching(true);
@@ -279,6 +362,7 @@ function App() {
       })
       .catch((error) => {
         // Обработка ошибки
+        clearTimeout(timeoutId);
         console.log(error);
         setSearchError(true);
       });
@@ -319,6 +403,10 @@ function App() {
                     filmsToRender={filmsToRender}
                     preloaderHidden={preloaderHidden}
                     onPreloader={handlePreloaderButton}
+                    onAddFilm={addFavoriteMovies}
+                    onDelFilm={deleteFavoriteMovies}
+                    savedFilms={filteredSavedFilms}
+                    onInitialFilm={getInintialSavedFilms}
                   />
                   <Footer />
                 </>
@@ -332,7 +420,14 @@ function App() {
                   <ProtectedRoute
                     element={SavedMovies}
                     location={"saved"}
-                    savedFilms={savedFilms}
+                    onGetFilms={getSearchFilms}
+                    setIsLoading={setIsLoading}
+                    setIsChecked={setIsChecked}
+                    isChecked={isChecked}
+                    savedFilms={filteredSavedFilms}
+                    onDelFilm={deleteFavoriteMovies}
+                    onInitialFilm={getInintialSavedFilms}
+                    // testfilms={testfilms2}
                   />
                   <Footer />
                 </>
