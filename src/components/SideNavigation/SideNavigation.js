@@ -12,9 +12,9 @@ function SideNavigation({ isMenuOpen, setMenuOpen }) {
       <div className={`side-navigation ${isMenuOpen ? '' : 'side-navigation_disabled'}`}>
         <div className="side-navigation__close-btn" onClick={closeSideNavigation}></div>
         <nav className="side-navigation__link-container">
-          <Link className="side-navigation__link" to={'/'}>Главная</Link>
-          <Link className="side-navigation__link" to={'/movies'}>Фильмы</Link>
-          <Link className="side-navigation__link" to={'/saved-movies'}>Сохранённые фильмы</Link>
+          <Link className="side-navigation__link" to={'/'} onClick={closeSideNavigation}>Главная</Link>
+          <Link className="side-navigation__link" to={'/movies'} onClick={closeSideNavigation}>Фильмы</Link>
+          <Link className="side-navigation__link" to={'/saved-movies'} onClick={closeSideNavigation}>Сохранённые фильмы</Link>
         </nav>
         <Link className={`navigation__account-container ${isMenuOpen ? 'navigation__account-container_enabled' : ''}`} to={"/profile"}>
           <p className="navigation__link">Аккаунт</p>
