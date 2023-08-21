@@ -8,7 +8,6 @@ import { LoggedInContext } from '../../contexts/LoggedInContext';
 function Navigation({ location }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const { loggedIn } = useContext(LoggedInContext);
-  console.log('123');
 
   let content;
 

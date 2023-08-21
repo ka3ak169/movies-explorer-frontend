@@ -110,31 +110,45 @@ function App() {
     getInintialSavedFilms();
     const fetchData = async () => {
       try {
-        const storedToken = localStorage.getItem("token"); //получение токена
-        const lastVisitedPage =
-          localStorage.getItem("lastVisitedPage") || "/movies"; // Получение последней посещенной страницы
-        const lastSearchText = localStorage.getItem("lastSearchText"); // получение последнего запроса для отрисовки при загрузке
-        if (storedToken) {
-          const token = JSON.parse(storedToken);
-          await tokenCheck(token);
-          setLoggedIn(true);
-
-          navigate(lastVisitedPage); // Перенаправление на последнюю посещенную страницу
-        }
-        if (loggedIn) {
-          const userData = await getUserInformation();
-          setCurrentUser(userData.data);
-        }
-        if (lastSearchText) {
-          setIsLoading(true);
-          getSearchFilms(lastSearchText);
-        }
-      } catch (error) {
-        console.log(error);
-      }
+            const storedToken = localStorage.getItem("token"); //получение токена
+            const lastVisitedPage =
+              localStorage.getItem("lastVisitedPage") || "/movies"; // Получение последней посещенной страницы
+            const lastSearchText = localStorage.getItem("lastSearchText"); // получение последнего запроса для отрисовки при загрузке
+            if (storedToken) {
+              const token = JSON.parse(storedToken);
+              await tokenCheck(token);
+              setLoggedIn(true);
+              navigate(lastVisitedPage); // Перенаправление на последнюю посещенную страницу
+            }
+            if (lastSearchText) {
+              setIsLoading(true);
+              getSearchFilms(lastSearchText);
+            }
+          } catch (error) {
+            console.log(error);
+          }
     };
     fetchData();
   }, [loggedIn]);
+
+  useEffect(() => {
+    const userData = async () => {
+      try {
+        const storedToken = localStorage.getItem("token"); //получение токена
+        if (storedToken) {
+          const token = JSON.parse(storedToken);
+          await tokenCheck(token);
+        }
+            if (loggedIn) {
+              const userData = await getUserInformation();
+              setCurrentUser(userData.data);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+    };
+    userData();
+  }, [loggedIn, changeInformation]);
 
   const tokenCheck = async (token) => {
     try {
@@ -210,6 +224,7 @@ function App() {
   const updateUserInformation = (data) => {
     changeUserInformation(data)
       .then((result) => {
+        // setCurrentUser(userData.data);
         setRegistration(true);
         setChangeInformation(true);
         setIsInfoTooltipPopupOpen(true);

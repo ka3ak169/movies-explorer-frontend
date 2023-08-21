@@ -1,26 +1,6 @@
 import apiUrl from './utils';
 import { movieApiPart } from './utils';
 
-
-// Создание объекта headers с заголовками запроса
-// const headers = {
-//   "Content-Type": "application/json",
-// };
-
-// Получение токена из localStorage
-// const storedToken = localStorage.getItem("token");
-
-// // Если в localStorage есть токен, добавляем его в заголовки
-// if (storedToken && storedToken !== "null" && storedToken !== "undefined") {
-//   console.log('storedToken ' + storedToken);
-//   const token = JSON.parse(storedToken);
-//   console.log('token' + token);
-
-//   headers.authorization = `Bearer ${token}`;
-// } else {
-//   console.log('Token не существует');
-// }
-
 const getHeaders = () => {
   const storedToken = localStorage.getItem("token");
   let token;

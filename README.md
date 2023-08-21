@@ -1,5 +1,6 @@
 # Использован макет  DARK-5
 # САЙТ: https://diploma-folio.nomoredomainsicu.ru/
+# Пул-реквест: https://github.com/ka3ak169/movies-explorer-frontend/pull/2
 
 ## Getting Started with Create React App
 
