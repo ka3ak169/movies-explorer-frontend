@@ -1,5 +1,5 @@
 // export const devUrl = 'http://localhost:3000';
-export const prodUrl = 'https://diploma-folio.nomoredomainsicu.ru';
+export const prodUrl = 'https://api.diploma-folio.nomoredomains.xyz';
 
 export const movieApiUrl = 'https://api.nomoreparties.co/beatfilm-movies';
 
