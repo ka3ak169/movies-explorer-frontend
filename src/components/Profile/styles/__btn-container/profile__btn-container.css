@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  margin-top: 220px
+  margin-top: 220px;
 }
 
 
@@ -14,7 +14,7 @@
 }
 
 @media screen and (max-width: 375px) {
-  .profile__btn-container {    
-    margin-top: 379px;    
+  .profile__btn-container {
+    margin-top: 300px;
   }
 }
