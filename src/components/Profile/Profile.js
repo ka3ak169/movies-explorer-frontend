@@ -33,7 +33,8 @@ function Profile({ onChangeInformation, onLogout}) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newData = {name: values.profileName, email:values.profileEmail};    
-    onChangeInformation(newData)
+    onChangeInformation(newData);
+    setButtonActive(true);
   };
 
   const handleLogout = (e) => {
