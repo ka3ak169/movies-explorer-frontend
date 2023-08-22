@@ -118,6 +118,7 @@
 /* profile */
 @import url(./components/Profile/styles/profile.css);
 @import url(./components/Profile/styles/__edit-btn/profile__edit-btn.css);
+@import url(./components/Profile/styles/__edit-btn/_disable/profile__edit-btn_disable.css);
 @import url(./components/Profile/styles/__error/profile__error.css);
 @import url(./components/Profile/styles/__exit-btn/profile__exit-btn.css);
 @import url(./components/Profile/styles/__btn-container/profile__btn-container.css);

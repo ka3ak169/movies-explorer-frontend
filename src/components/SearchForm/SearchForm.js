@@ -1,25 +1,43 @@
 import React from "react";
-// import { Link } from 'react-router-dom';
+import { useEffect } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import { useFormValidation } from "../../utils/useFormValidation";
+import { useNavigate, useLocation } from "react-router-dom";
 
-function SearchForm({ onGetFilms, setIsLoading, setIsChecked, isChecked }) {
-  const { values, errors, handleChange, setErrors, reset } = useFormValidation();
+
+function SearchForm({ onGetFilms, setIsLoading, setIsChecked, isChecked, lastSearchText, isLoading }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { values, errors, handleChange, setErrors, reset, setValue } = useFormValidation();
+
+  useEffect(() => {
+    if (lastSearchText) {
+      setValue("filmName", lastSearchText);
+    }
+  }, [location.pathname, isLoading]);
 
   const handleBlur = () => {
     setErrors((oldErrors) => ({ ...oldErrors, filmName: "" })); // Устанавливаем ошибку для filmName в пустую строку
   };
 
-  function handleSubmit (evt) {
+  function handleSubmit(evt) {
     evt.preventDefault();
-    setIsLoading(true);
-    onGetFilms(values.filmName);
-    reset();
+    if (values.filmName) {
+      setIsLoading(true);
+      onGetFilms(values.filmName);
+      console.log(values.filmName);
+      navigate("/movies");
+      // setValue("filmName", values.filmName);
+      // console.log(values.filmName);
+      // reset();
+    } else {
+      setErrors({ filmName: "Нужно ввести ключевое слово" });
+    }
   }
 
   return (
     <section className="search-form">
-      <form className="search-form__form" onSubmit={handleSubmit}>
+      <form className="search-form__form" onSubmit={handleSubmit} noValidate>
         <input
           className="search-form__input"
           placeholder="Фильм"
@@ -30,7 +48,7 @@ function SearchForm({ onGetFilms, setIsLoading, setIsChecked, isChecked }) {
           onBlur={handleBlur} // Добавляем обработчик потери фокуса
           required
         ></input>
-        <button className="search-form__sbmt-btn"></button>
+        <button className="search-form__sbmt-btn" type='submit'></button>
       </form>
       <span className="search-form__error">{errors["filmName"]}</span>
       <hr className="search-form__divider" />

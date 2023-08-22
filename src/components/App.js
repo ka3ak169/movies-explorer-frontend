@@ -13,6 +13,7 @@ import InfoTooltip from "./InfoTooltip/InfoTooltip";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { LoggedInContext } from "../contexts/LoggedInContext";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
+import RedirectIfLoggedIn from "./RedirectIfLoggedIn/RedirectIfLoggedIn";
 import { register, authorization, authorize } from "../utils/Auth";
 import {
   getUserInformation,
@@ -22,8 +23,10 @@ import {
   getInitialFilms,
 } from "../utils/MainApi";
 import { getAllFilms } from "../utils/MoviesApi";
+import { useFormValidation } from "../utils/useFormValidation";
 
 function App() {
+  const { setValue } = useFormValidation();
   const [currentUser, setCurrentUser] = useState({});
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false); // попап регистрации
   const [loggedIn, setLoggedIn] = useState(false);
@@ -42,6 +45,8 @@ function App() {
   const [isChecked, setIsChecked] = useState(false); // состояние ползунка короткометражек
   const [preloaderHidden, setPreloaderHidden] = useState(false); //состояние кнопки прелоадера
   const [rowsToShow, setRowsToShow] = useState(getDefaultRows()); // количество карточек
+  const [lastSearchText, setLastSearchText] = useState(''); //текст последнего запроса
+
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -112,19 +117,24 @@ function App() {
       try {
             const storedToken = localStorage.getItem("token"); //получение токена
             const lastVisitedPage =
-              localStorage.getItem("lastVisitedPage") || "/movies"; // Получение последней посещенной страницы
-            const lastSearchText = localStorage.getItem("lastSearchText"); // получение последнего запроса для отрисовки при загрузке
+              localStorage.getItem("lastVisitedPage") || "/movies"; // Получение последней посещенной страницы            
+            const savedData = localStorage.getItem("lastSearchData");
+            if (savedData) {
+              const lastSearchData = JSON.parse(savedData);
+              const { text, isCheckedFilter } = lastSearchData;
+              setLastSearchText(text);
+              setIsLoading(true);
+              getSearchFilms(text);
+              setIsChecked(isCheckedFilter);
+            }            
             if (storedToken) {
               const token = JSON.parse(storedToken);
               await tokenCheck(token);
               setLoggedIn(true);
               navigate(lastVisitedPage); // Перенаправление на последнюю посещенную страницу
             }
-            if (lastSearchText) {
-              setIsLoading(true);
-              getSearchFilms(lastSearchText);
-            }
           } catch (error) {
+            handleLogout();
             console.log(error);
           }
     };
@@ -145,6 +155,7 @@ function App() {
             }
           } catch (error) {
             console.log(error);
+            handleLogout();
           }
     };
     userData();
@@ -188,8 +199,8 @@ function App() {
         setRegistration(true);
         setIsInfoTooltipPopupOpen(true);
         setTimeout(() => {
-          navigate("/signup");
           closeAllPopups();
+          handleLoginSubmit(email, password);
         }, 2000);
       })
       .catch((error) => {
@@ -259,7 +270,8 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("lastVisitedPage");
-    localStorage.removeItem("lastSearchText");
+    // localStorage.removeItem("lastSearchText");
+    localStorage.removeItem("lastSearchData");
     setCurrentUser({});
     setLoggedIn(false);
     setFilteredSavedFilms([]);
@@ -302,17 +314,14 @@ function App() {
   }, [allFilms, isChecked, rowsToShow, loggedIn, savedFilms]);
 
   const filterFilms = (films, searchText) => {
+    const lowerSearchText = searchText.toLowerCase();
     return films.filter(
       (film) =>
-        (film.description &&
-          film.description.toLowerCase().includes(searchText)) ||
-        (film.nameRU && film.nameRU.toLowerCase().includes(searchText)) ||
-        (film.nameEN && film.nameEN.toLowerCase().includes(searchText)) ||
-        (film.director && film.director.toLowerCase().includes(searchText)) ||
-        (film.country && film.country.toLowerCase().includes(searchText)) ||
-        (film.year && film.year.toString().includes(searchText))
+        (film.nameRU && film.nameRU.toLowerCase().includes(lowerSearchText)) ||
+        (film.nameEN && film.nameEN.toLowerCase().includes(lowerSearchText))
     );
   };
+
   // логика по нажатию на поиск
   const getSearchFilms = (text) => {
     setFilms([]);
@@ -324,9 +333,18 @@ function App() {
     }, 20000);
     getAllFilms()
       .then((result) => {
-        clearTimeout(timeoutId);
-        localStorage.setItem("lastSearchText", text);
         setIsLoading(false);
+
+        clearTimeout(timeoutId);
+        const lastSearchData = {
+          text: text,
+          isCheckedFilter: isChecked
+        }
+        console.log(text);
+        setLastSearchText(text)
+        setValue("filmName", text);
+        // navigate("/movies");
+        localStorage.setItem("lastSearchData", JSON.stringify(lastSearchData));
         setSearching(true);
         const searchText = text.toLowerCase();
         const filteredFilms = filterFilms(result, searchText);
@@ -387,6 +405,7 @@ function App() {
                     onDelFilm={deleteFavoriteMovies}
                     savedFilms={filteredSavedFilms}
                     onInitialFilm={getInintialSavedFilms}
+                    lastSearchText={lastSearchText}
                   />
                   <Footer />
                 </>
@@ -402,11 +421,13 @@ function App() {
                     location={"saved"}
                     onGetFilms={getSearchFilms}
                     setIsLoading={setIsLoading}
+                    isLoading={isLoading}
                     setIsChecked={setIsChecked}
                     isChecked={isChecked}
                     savedFilms={filteredSavedFilms}
                     onDelFilm={deleteFavoriteMovies}
-                    onInitialFilm={getInintialSavedFilms}   
+                    onInitialFilm={getInintialSavedFilms}
+                    lastSearchText={lastSearchText}
                   />
                   <Footer />
                 </>
@@ -429,7 +450,10 @@ function App() {
               path="/signin"
               element={
                 <>
-                  <Register onSubmit={handleRegisterSubmit} />
+                  <RedirectIfLoggedIn
+                    element={Register}
+                    onSubmit={handleRegisterSubmit}
+                  />                  
                 </>
               }
             />
@@ -437,7 +461,10 @@ function App() {
               path="/signup"
               element={
                 <>
-                  <Login onSubmit={handleLoginSubmit} />
+                  <RedirectIfLoggedIn
+                    element={Login}
+                    onSubmit={handleLoginSubmit}
+                  />
                 </>
               }
             />

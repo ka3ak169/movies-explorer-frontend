@@ -5,13 +5,14 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 function SavedMovies({
   location,
   savedFilms,
-  testfilms,
   onDelFilm,
   onInitialFilm,
   onGetFilms,
   setIsLoading,
   setIsChecked,
-  isChecked
+  isChecked,
+  lastSearchText, 
+  isLoading
 }) {
 
   return (
@@ -21,6 +22,8 @@ function SavedMovies({
         setIsLoading={setIsLoading}
         setIsChecked={setIsChecked}
         isChecked={isChecked}
+        lastSearchText={lastSearchText}
+        isLoading={isLoading}
       />
       <MoviesCardList
         location={location}

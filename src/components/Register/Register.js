@@ -1,15 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useFormValidation } from '../../utils/useFormValidation'
+import React from "react";
+import { Link } from "react-router-dom";
+import { useFormValidation } from "../../utils/useFormValidation";
 
 function Register({ onSubmit }) {
-  const { values, errors, isValid, handleChange, reset } = useFormValidation();
+  const {
+    values,
+    errors,
+    isValid,
+    handleChange,
+    reset,
+    handleEmailChange,
+    emailError,
+    setEmail,
+    setEmailError,
+  } = useFormValidation();
 
-  function handleSubmit (evt) {
+  function handleSubmit(evt) {
     evt.preventDefault();
 
-    onSubmit(values["registerName"], values["registerEmail"], values["registerPassword"]);
+    onSubmit(
+      values["registerName"],
+      values["registerEmail"],
+      values["registerPassword"]
+    );
     reset();
+    setEmail("");
+    setEmailError("");
   }
 
   return (
@@ -18,7 +34,7 @@ function Register({ onSubmit }) {
         <div className="register__logo"></div>
       </Link>
       <h2 className="register__title">Добро пожаловать!</h2>
-      <form className="register__form" onSubmit={handleSubmit} noValidate>
+      <form className="register__form" onSubmit={handleSubmit}>
         <div className="register__input-container">
           <label className="register__label">Имя</label>
           {/* Name */}
@@ -47,14 +63,17 @@ function Register({ onSubmit }) {
             }`}
             name="registerEmail"
             value={values["registerEmail"] ?? ""}
-            onChange={handleChange}
+            // onChange={handleChange}
+            onChange={(e) => handleEmailChange("registerEmail", e)}
             type="Email"
             placeholder="Email"
             required
             autoComplete="off"
           />
         </div>
-        <span className="register__error">{errors["registerEmail"]}</span>
+        {/* <span className="register__error">{errors["registerEmail"]}</span> */}
+        <span className="register__error">{emailError}</span>
+
         <div className="register__input-container">
           <label className="register__label">Пароль</label>
           {/* Password */}

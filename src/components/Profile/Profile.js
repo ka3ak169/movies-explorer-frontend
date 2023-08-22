@@ -1,10 +1,22 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useFormValidation } from "../../utils/useFormValidation";
 
 function Profile({ onChangeInformation, onLogout}) {
   const currentUser = useContext(CurrentUserContext);
   const { values, errors, handleChange, setValue } = useFormValidation();
+
+  const [isButtonActive, setButtonActive] = useState(true); //перенести в App
+
+  const checkForChanges = () => {
+    if (values.profileName !== currentUser.name || values.profileEmail !== currentUser.email) {
+      setButtonActive(false);
+      console.log('добавили');
+    } else {
+      setButtonActive(true);
+      console.log('убрали');
+    }
+  };
 
   // Устанавливаем начальные значения из currentUser при первом рендере
   useEffect(() => {
@@ -13,6 +25,10 @@ function Profile({ onChangeInformation, onLogout}) {
       setValue("profileEmail", currentUser.email);
     }
   }, [currentUser]);
+
+  useEffect(() => {
+    checkForChanges();
+  }, [values.profileName, values.profileEmail]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,7 +81,9 @@ function Profile({ onChangeInformation, onLogout}) {
         <span className="profile__error">{errors["profileEmail"]}</span>
 
         <div className="profile__btn-container">
-          <button className="profile__edit-btn" id="editBtn" type="submit" onSubmit={handleSubmit}>
+          {/* <button className="profile__edit-btn" id="editBtn" type="submit" onSubmit={handleSubmit}> */}
+          <button className={`profile__edit-btn ${isButtonActive ? "profile__edit-btn_disable" : ""}`} id="editBtn" type="submit" onSubmit={handleSubmit}>
+            
             Редактировать
           </button>
           <button className="profile__exit-btn" type="button" id="exitBtn" onClick={handleLogout}>

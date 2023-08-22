@@ -21,6 +21,7 @@ function Movies({
   onDelFilm,
   savedFilms,
   onInitialFilm,
+  lastSearchText
 }) {
 
   return (
@@ -30,6 +31,8 @@ function Movies({
         setIsLoading={setIsLoading}
         setIsChecked={setIsChecked}
         isChecked={isChecked}
+        lastSearchText={lastSearchText}
+        isLoading={isLoading}
       />
       {searching && !nomatches && (
         <MoviesCardList
