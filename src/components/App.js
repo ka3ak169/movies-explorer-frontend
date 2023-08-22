@@ -125,8 +125,9 @@ function App() {
               setLastSearchText(text);
               setIsLoading(true);
               getSearchFilms(text);
+              console.log(isCheckedFilter);
               setIsChecked(isCheckedFilter);
-            }            
+            }
             if (storedToken) {
               const token = JSON.parse(storedToken);
               await tokenCheck(token);
