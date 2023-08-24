@@ -1,10 +1,18 @@
 import React from "react";
 // import { Link } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
-function FilterCheckbox({ setIsChecked, isChecked }) {
+
+function FilterCheckbox({ setIsChecked, isChecked, isCheckedSaved, setIsCheckedSaved, location  }) {
   const handleCheckboxChange = (event) => {
-    setIsChecked(event.target.checked);
+    if(location === 'saved') {
+      setIsCheckedSaved(event.target.checked);
+    } else {
+      setIsChecked(event.target.checked);   
+    }     
   };
+
+  const checkedValue = location === 'saved' ? isCheckedSaved : isChecked;
 
   return (
     <div className="filterCheckbox">
@@ -13,7 +21,7 @@ function FilterCheckbox({ setIsChecked, isChecked }) {
           className="filterCheckbox__checkbox"
           type="checkbox"
           onChange={handleCheckboxChange}
-          checked={isChecked}
+          checked={checkedValue}
         />
         <span className="filterCheckbox__slider" />
       </label>

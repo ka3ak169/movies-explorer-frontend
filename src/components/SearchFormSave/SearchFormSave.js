@@ -4,35 +4,30 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import { useFormValidation } from "../../utils/useFormValidation";
 import { useNavigate, useLocation } from "react-router-dom";
 
-function SearchForm({
+function SearchFormSave({
+  location,
   onGetFilms,
+  isCheckedSaved,
+  setIsCheckedSaved,
   setIsLoading,
   setIsChecked,
   isChecked,
   lastSearchText,
   isLoading,
-  filteredFilms,
-  allFilms,
+  savedFilms,
+  setSavedFilms,
+  saveToFilms,
+  setSavedToFilms,
+  onInitialFilm,
+  savedFilteredFilms,
+  renderedSavesFilms,
+  setRenderedSavesFilms,
+  setSavedFilteredFilms,
   onDutaionFilter,
-  setRenderedMoviesFilms,
-  setFilteredFilms,
-  setSearching,
 }) {
   const navigate = useNavigate();
-  const location = useLocation();
   const { values, errors, handleChange, setErrors, reset, setValue } =
     useFormValidation();
-
-  useEffect(() => {
-    if (lastSearchText) {
-      console.log(lastSearchText);
-      setValue("filmName", lastSearchText);
-    }
-  }, [location.pathname, isLoading]);
-
-  const handleBlur = () => {
-    setErrors((oldErrors) => ({ ...oldErrors, filmName: "" })); // Устанавливаем ошибку для filmName в пустую строку
-  };
 
   // useEffect(() => {
   //   if (lastSearchText) {
@@ -40,24 +35,44 @@ function SearchForm({
   //   }
   // }, [location.pathname, isLoading]);
 
+  const handleBlur = () => {
+    setErrors((oldErrors) => ({ ...oldErrors, filmName: "" })); // Устанавливаем ошибку для filmName в пустую строку
+  };
+
   function handleSubmit(evt) {
     evt.preventDefault();
+    console.log("123");
     if (values.filmName) {
+      console.log(saveToFilms);
+
+      // onInitialFilm();
+
+      // console.log(savedFilms);
+
+      const getSavedFilmsArray = onGetFilms(values.filmName, savedFilms);
+      // setRenderedSavesFilms(getSavedFilmsArray);
+      // setSavedToFilms(getSavedFilmsArray)
+      // setRenderedSavesFilms(getSavedFilmsArray);
+      console.log(getSavedFilmsArray);
+      setSavedToFilms(getSavedFilmsArray);
+      // setSearchedSaveFilms()
+      const filtered = onDutaionFilter(getSavedFilmsArray, isCheckedSaved);
+      console.log(filtered);
+
+
+      setRenderedSavesFilms(filtered);
+
+
+      // console.log(getSavedFilmsArray);
+      // console.log(savedFilms);
+      // setSavedFilms(getSavedFilmsArray);
+
+      // setSavedFilteredFilms(getSavedFilmsArray); // НЕ ТРОГАТЬ
+      // console.log(getSavedFilmsArray);
+      // console.log(filtered);
+      // setRenderedSavesFilms(filtered);
       // setIsLoading(true);
-      const getFilmsArray = onGetFilms(values.filmName, allFilms);
-      console.log(getFilmsArray);
-      setFilteredFilms(getFilmsArray); //НЕ ТРОГАТЬ
-      const filtered = onDutaionFilter(filteredFilms, isChecked);
-      setRenderedMoviesFilms(filtered);
-      const lastSearchData = {
-        text: values.filmName,
-        isCheckedFilter: isChecked,
-      };
-      localStorage.setItem("lastSearchData", JSON.stringify(lastSearchData));
-      setSearching(true);
-      // const durationFiltredFilms = onDutaionFilter(getFilmsArray, isChecked);
-      // console.log(durationFiltredFilms);
-      // setRenderedMoviesFilms(getFilmsArray);
+      // onGetFilms(values.filmName);
       // console.log(values.filmName);
       // navigate("/movies");
       // setValue("filmName", values.filmName);
@@ -85,9 +100,15 @@ function SearchForm({
       </form>
       <span className="search-form__error">{errors["filmName"]}</span>
       <hr className="search-form__divider" />
-      <FilterCheckbox setIsChecked={setIsChecked} isChecked={isChecked} />
+      <FilterCheckbox
+        // setIsChecked={setIsChecked}
+        // isChecked={isChecked}
+        location={location}
+        isCheckedSaved={isCheckedSaved}
+        setIsCheckedSaved={setIsCheckedSaved}
+      />
     </section>
   );
 }
 
-export default SearchForm;
+export default SearchFormSave;

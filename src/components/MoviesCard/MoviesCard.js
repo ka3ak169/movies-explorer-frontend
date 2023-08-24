@@ -5,7 +5,7 @@ import { movieApiPart } from "../../utils/utils";
 
 
 
-function MoviesCard({ location, film, onAddFilm, onDelFilm, filmsToRender, savedFilms, onInitialFilm }) {
+function MoviesCard({ location, film, onAddFilm, onDelFilm, filmsToRender, savedFilms, onInitialFilm, setSavedToFilms, saveToFilms }) {
   const [cardIsActive, setCardIsActive] = useState(false);
   const currentUser = useContext(CurrentUserContext);
 
@@ -55,14 +55,28 @@ function MoviesCard({ location, film, onAddFilm, onDelFilm, filmsToRender, saved
     }
   }
 
+  // function handleDeleteFavoriteSubmit() {
+  //   onDelFilm(film._id)
+  //     .then((result) => {
+  //       // onInitialFilm();
+
+  //     })
+  //     .catch((error) => {
+  //       // Обработка ошибки
+  //       console.log(error);  
+  //     });
+  // }
+
+
   function handleDeleteFavoriteSubmit() {
     onDelFilm(film._id)
       .then((result) => {
-        onInitialFilm();
+        console.log(result._id);
+        setSavedToFilms((prevFilms) => prevFilms.filter((f) => f._id !== film._id));
       })
       .catch((error) => {
         // Обработка ошибки
-        console.log(error);  
+        console.log(error);
       });
   }
 

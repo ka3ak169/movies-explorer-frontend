@@ -21,7 +21,13 @@ function Movies({
   onDelFilm,
   savedFilms,
   onInitialFilm,
-  lastSearchText
+  lastSearchText,
+  filteredFilms,
+  allFilms,
+  onDutaionFilter,
+  setRenderedMoviesFilms,
+  setFilteredFilms,
+  setSearching
 }) {
 
   return (
@@ -33,6 +39,12 @@ function Movies({
         isChecked={isChecked}
         lastSearchText={lastSearchText}
         isLoading={isLoading}
+        filteredFilms={filteredFilms}
+        allFilms={allFilms}
+        onDutaionFilter={onDutaionFilter}
+        setRenderedMoviesFilms={setRenderedMoviesFilms}
+        setFilteredFilms={setFilteredFilms}
+        setSearching={setSearching}
       />
       {searching && !nomatches && (
         <MoviesCardList

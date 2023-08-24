@@ -36,13 +36,18 @@ function App() {
   const [films, setFilms] = useState([]); //массив который отрендерится
   const [allFilms, setAllFilms] = useState([]); //массив с сервера после фильтра запроса
   const [savedFilms, setSavedFilms] = useState([]); //массив сохраненных фильмов
-  const [filteredSavedFilms, setFilteredSavedFilms] = useState([]); // отфильтрованные сохраненные
+  const [saveToFilms, setSavedToFilms] = useState([]); // сохраненные для работы
+  const [savedFilteredFilms, setSavedFilteredFilms] = useState([]); // отфильтрованные сохраненные
+  const [filteredFilms, setFilteredFilms] = useState([]); // отфильтрованные 
   const [filmsToRender, setFilmsToRender] = useState([]); //массив фильмов для длинны и работы с ним до рендера
+  const [renderedMoviesFilms, setRenderedMoviesFilms] = useState([]); //массив фильмов для рендера на movies
+  const [renderedSavesFilms, setRenderedSavesFilms] = useState([]); //массив фильмов для рендера на saves-movies
   const [searching, setSearching] = useState(false); //обозначает факт поиска
   const [nomatches, setNomatches] = useState(false); //состояние прелоадера
   const [isLoading, setIsLoading] = useState(false); //состояние прелоадера
   const [searchError, setSearchError] = useState(false); //состояние прелоадера
   const [isChecked, setIsChecked] = useState(false); // состояние ползунка короткометражек
+  const [isCheckedSaved, setIsCheckedSaved] = useState(false); // состояние ползунка сохраненных короткометражек
   const [preloaderHidden, setPreloaderHidden] = useState(false); //состояние кнопки прелоадера
   const [rowsToShow, setRowsToShow] = useState(getDefaultRows()); // количество карточек
   const [lastSearchText, setLastSearchText] = useState(''); //текст последнего запроса
@@ -63,6 +68,7 @@ function App() {
     getInitialFilms()
       .then((result) => {
         setSavedFilms(result);
+        console.log(savedFilms);
       })
       .catch((error) => {
         // Обработка ошибки
@@ -105,6 +111,7 @@ function App() {
 
   // Извлечение при загрузке
   useEffect(() => {
+
     const storedPage = localStorage.getItem("lastVisitedPage");
     if (storedPage) {
       setLastVisitedPage(storedPage);
@@ -112,7 +119,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    getInintialSavedFilms();
+    getInintialSavedFilms(); //получение массива сохраненных фильмов
+    console.log(savedFilms);
     const fetchData = async () => {
       try {
             const storedToken = localStorage.getItem("token"); //получение токена
@@ -275,7 +283,7 @@ function App() {
     localStorage.removeItem("lastSearchData");
     setCurrentUser({});
     setLoggedIn(false);
-    setFilteredSavedFilms([]);
+    // setFilteredSavedFilms([]);
     setAllFilms([]);
     setSavedFilms([]);
     setFilmsToRender([]);
@@ -285,36 +293,19 @@ function App() {
   };
 
   //отрисовка фильмов
-  const renderFilms = (films, isChecked) => {
-    const filmsToRender = isChecked
-      ? films
-      : films.filter((film) => film.duration > 52);
-    setFilmsToRender(filmsToRender);
-    setFilms(filmsToRender.slice(0, rowsToShow));
+  // const renderFilms = (films, isChecked) => {
+  //   const filmsToRender = isChecked
+  //     ? films
+  //     : films.filter((film) => film.duration > 40);
+  //   setFilmsToRender(filmsToRender);
+  //   setFilms(filmsToRender.slice(0, rowsToShow));
+  // };
+
+  const filterDurationFilms = (films, isShort ) => {
+    return isShort ? films : films.filter((f) => f.duration > 40);
   };
 
-  const filterSavedFilms = (films, isShort) => {
-    return isShort ? films : films.filter((f) => f.duration > 52);
-  };
-
-  useEffect(() => {
-    const filtered = filterSavedFilms(savedFilms, isChecked);
-    setFilteredSavedFilms(filtered);
-  }, [savedFilms, isChecked, loggedIn]);
-
-  useEffect(() => {
-    // Эта функция будет вызвана, когда allFilms или isChecked изменятся
-    const renderFilms = () => {
-      const filmsToRender = isChecked
-        ? allFilms
-        : allFilms.filter((film) => film.duration > 52);
-      setFilms(filmsToRender.slice(0, rowsToShow));
-    };
-
-    renderFilms(); // Вызываем функцию рендеринга сразу, чтобы отобразить фильмы
-  }, [allFilms, isChecked, rowsToShow, loggedIn, savedFilms]);
-
-  const filterFilms = (films, searchText) => {
+  const searchFilterFilms = (searchText, films ) => {
     const lowerSearchText = searchText.toLowerCase();
     return films.filter(
       (film) =>
@@ -322,12 +313,81 @@ function App() {
         (film.nameEN && film.nameEN.toLowerCase().includes(lowerSearchText))
     );
   };
+  
+  useEffect(() => {
+    console.log('12333333');
+    setSavedToFilms(savedFilms);
+    const filteredSave = filterDurationFilms(savedFilms, isCheckedSaved);
+    console.log(filteredSave);
+    
+    setRenderedSavesFilms(filteredSave);
+  }, [savedFilms]);
 
-  // логика по нажатию на поиск
-  const getSearchFilms = (text) => {
+  useEffect(() => {    
+    const filteredSave = filterDurationFilms(saveToFilms, isCheckedSaved);
+    console.log(filteredSave);
+    
+    setRenderedSavesFilms(filteredSave);
+  }, [saveToFilms]);
+
+  useEffect(() => {
+    console.log(savedFilms);
+    console.log(savedFilteredFilms);
+    const filteredSave = filterDurationFilms(saveToFilms, isCheckedSaved);
+    setRenderedSavesFilms(filteredSave);
+  }, [isCheckedSaved]);
+
+
+  // useEffect(() => {
+  //   const filteredSave = filterDurationFilms(savedFilms, isCheckedSaved);
+  //   setRenderedSavesFilms(filteredSave);
+  //   // setSavedFilteredFilms(savedFilms);
+  //   console.log(renderedSavesFilms);
+  //   console.log(savedFilms);
+  // }, [savedFilms, isCheckedSaved]);
+
+  // SavedFilteredFilms
+
+  // useEffect(() => {
+  //   const filteredSave = filterDurationFilms(savedFilms, isCheckedSaved);
+  //   setRenderedSavesFilms(filteredSave);
+  //   console.log(renderedSavesFilms);
+  //   console.log(savedFilms);
+  // }, [savedFilteredFilms]);
+
+
+  // useEffect(() => {
+  //   // console.log(savedFilms);
+  //   const filteredSave = filterDurationFilms(savedFilteredFilms, isCheckedSaved);
+  //   // setFilteredSavedFilms(filteredSave);
+  //   setRenderedSavesFilms(filteredSave);
+  // }, [ isCheckedSaved, loggedIn, savedFilteredFilms]);
+
+  useEffect(() => {
+    const filtered = filterDurationFilms(filteredFilms, isChecked);
+    console.log(renderedMoviesFilms);
+    // console.log(filtered);
+    setRenderedMoviesFilms(filtered);
+  }, [allFilms, isChecked, loggedIn, filteredFilms]);
+
+
+  // useEffect(() => {
+  //   // Эта функция будет вызвана, когда allFilms или isChecked изменятся
+  //   const renderFilms = () => {
+  //     const filmsToRender = isChecked
+  //       ? allFilms
+  //       : allFilms.filter((film) => film.duration > 40);
+  //     setFilms(filmsToRender.slice(0, rowsToShow));
+  //   };
+
+  //   renderFilms(); // Вызываем функцию рендеринга сразу, чтобы отобразить фильмы
+  // }, [allFilms, isChecked, rowsToShow, loggedIn, savedFilms]);
+
+
+  //ПОЛУЧИЛИ ВСЕ ФИЛЬМЫ
+  useEffect(() => {
     setFilms([]);
     setIsLoading(true);
-    // Установка таймаута в 20 секунд
     const timeoutId = setTimeout(() => {
       console.log("Поиск занимает слишком много времени!");
       setSearchError(true);
@@ -335,29 +395,11 @@ function App() {
     getAllFilms()
       .then((result) => {
         setIsLoading(false);
-
         clearTimeout(timeoutId);
-        const lastSearchData = {
-          text: text,
-          isCheckedFilter: isChecked
-        }
-        console.log(text);
-        setLastSearchText(text)
-        setValue("filmName", text);
-        // navigate("/movies");
-        localStorage.setItem("lastSearchData", JSON.stringify(lastSearchData));
         setSearching(true);
-        const searchText = text.toLowerCase();
-        const filteredFilms = filterFilms(result, searchText);
-        setAllFilms(filteredFilms);
-        if (filteredFilms.length === 0) {
-          setNomatches(true);
-          setFilms([]);
-          console.log("ничего не нашел");
-        } else {
-          setNomatches(false);
-          renderFilms(filteredFilms, isChecked);
-        }
+        setAllFilms(result);
+        console.log(result);
+
       })
       .catch((error) => {
         // Обработка ошибки
@@ -365,7 +407,86 @@ function App() {
         console.log(error);
         setSearchError(true);
       });
-  };
+  }, []);
+
+  // логика по нажатию на поиск
+  // const getSearchFilms = (text) => {
+  //   setFilms([]);
+  //   setIsLoading(true);
+  //   // Установка таймаута в 20 секунд
+  //   const timeoutId = setTimeout(() => {
+  //     console.log("Поиск занимает слишком много времени!");
+  //     setSearchError(true);
+  //   }, 20000);
+  //   getAllFilms()
+  //     .then((result) => {
+  //       setIsLoading(false);
+
+  //       clearTimeout(timeoutId);
+  //       const lastSearchData = {
+  //         text: text,
+  //         isCheckedFilter: isChecked
+  //       }
+  //       console.log(text);
+  //       setLastSearchText(text)
+  //       setValue("filmName", text);
+  //       // navigate("/movies");
+  //       localStorage.setItem("lastSearchData", JSON.stringify(lastSearchData));
+  //       setSearching(true);
+  //       const searchText = text.toLowerCase();
+  //       const filteredFilms = filterFilms(result, searchText);
+  //       setAllFilms(filteredFilms);
+  //       if (filteredFilms.length === 0) {
+  //         setNomatches(true);
+  //         setFilms([]);
+  //         console.log("ничего не нашел");
+  //       } else {
+  //         setNomatches(false);
+  //         renderFilms(filteredFilms, isChecked);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       // Обработка ошибки
+  //       clearTimeout(timeoutId);
+  //       console.log(error);
+  //       setSearchError(true);
+  //     });
+  // };
+
+  const getSearchFilms = (searchText, filmsArray) => {
+    // setIsLoading(true);
+    // // Установка таймаута в 20 секунд
+    // const timeoutId = setTimeout(() => {
+    //   console.log("Поиск занимает слишком много времени!");
+    //   setSearchError(true);
+    // }, 20000);
+    // const filteredFilms = filterFilms(filmsArray, searchText);
+    // const lastSearchData = {
+    //   text: searchText,
+    //   isCheckedFilter: isChecked,
+    // };
+    // localStorage.setItem("lastSearchData", JSON.stringify(lastSearchData));
+
+
+
+    
+    // setSearching(true);
+    // setLastSearchText(searchText)
+    // setValue("filmName", searchText);
+    // if (filteredFilms.length === 0) {
+    //           setNomatches(true);
+    //           setFilms([]);
+    //           console.log("ничего не нашел");
+    //         } else {
+    //           setNomatches(false);
+    //           // renderFilms(filteredFilms, isChecked);
+    //         }
+    return searchFilterFilms(searchText, filmsArray);
+    
+    // console.log(searhedFilms);
+
+    // console.log(filteredFilms);
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -398,15 +519,21 @@ function App() {
                     rowsToShow={rowsToShow}
                     nomatches={nomatches}
                     searching={searching}
-                    films={films}
+                    films={renderedMoviesFilms}
+                    filteredFilms={filteredFilms}
                     filmsToRender={filmsToRender}
                     preloaderHidden={preloaderHidden}
                     onPreloader={handlePreloaderButton}
                     onAddFilm={addFavoriteMovies}
-                    onDelFilm={deleteFavoriteMovies}
-                    savedFilms={filteredSavedFilms}
+                    onDelFilm={deleteFavoriteMovies}                    
                     onInitialFilm={getInintialSavedFilms}
                     lastSearchText={lastSearchText}
+                    allFilms={allFilms}
+                    onDutaionFilter={filterDurationFilms}
+                    setRenderedMoviesFilms={setRenderedMoviesFilms}
+                    setFilteredFilms={setFilteredFilms}
+                    location={"movies"}
+                    setSearching={setSearching}
                   />
                   <Footer />
                 </>
@@ -422,13 +549,23 @@ function App() {
                     location={"saved"}
                     onGetFilms={getSearchFilms}
                     setIsLoading={setIsLoading}
+                    films={renderedSavesFilms}
                     isLoading={isLoading}
                     setIsChecked={setIsChecked}
-                    isChecked={isChecked}
-                    savedFilms={filteredSavedFilms}
+                    savedFilms={savedFilms}
+                    setSavedFilms={setSavedFilms}
+                    setSavedFilteredFilms={setSavedFilteredFilms}
+                    saveToFilms={saveToFilms}
+                    setSavedToFilms={setSavedToFilms}
+                    savedFilteredFilms={savedFilteredFilms}
+                    renderedSavesFilms={renderedSavesFilms}
                     onDelFilm={deleteFavoriteMovies}
                     onInitialFilm={getInintialSavedFilms}
                     lastSearchText={lastSearchText}
+                    onDutaionFilter={filterDurationFilms}
+                    setRenderedSavesFilms={setRenderedSavesFilms}
+                    setIsCheckedSaved={setIsCheckedSaved}
+                    isCheckedSaved={isCheckedSaved}                    
                   />
                   <Footer />
                 </>

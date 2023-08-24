@@ -9,8 +9,11 @@ function MoviesCardList({
   onDelFilm,
   filmsToRender,
   savedFilms,
-  onInitialFilm
+  onInitialFilm,
+  setSavedToFilms,
+  saveToFilms
 }) {
+  console.log(films);
 
   if (searchError) {
     return (
@@ -34,6 +37,8 @@ function MoviesCardList({
             filmsToRender={filmsToRender}
             savedFilms={savedFilms}
             onInitialFilm={onInitialFilm}
+            saveToFilms={saveToFilms}
+            setSavedToFilms={setSavedToFilms}
           />
         ))}
       </section>
