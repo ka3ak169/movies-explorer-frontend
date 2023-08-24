@@ -7,8 +7,6 @@ function Movies({
   onGetFilms,
   films,
   searching,
-  nomatches,
-  setIsLoading,
   isLoading,
   searchError,
   setIsChecked,
@@ -22,29 +20,31 @@ function Movies({
   savedFilms,
   onInitialFilm,
   lastSearchText,
-  filteredFilms,
   allFilms,
   onDutaionFilter,
   setRenderedMoviesFilms,
-  setFilteredFilms,
-  setSearching
+  setSearching,
+  filmsToMovies,
+  setFilmsToMovies,
+  setNomatches,
+  nomatches
 }) {
 
   return (
     <main className="main">
       <SearchForm
         onGetFilms={onGetFilms}
-        setIsLoading={setIsLoading}
         setIsChecked={setIsChecked}
         isChecked={isChecked}
         lastSearchText={lastSearchText}
         isLoading={isLoading}
-        filteredFilms={filteredFilms}
         allFilms={allFilms}
         onDutaionFilter={onDutaionFilter}
         setRenderedMoviesFilms={setRenderedMoviesFilms}
-        setFilteredFilms={setFilteredFilms}
         setSearching={setSearching}
+        filmsToMovies={filmsToMovies}
+        setFilmsToMovies={setFilmsToMovies}
+        setNomatches={setNomatches}
       />
       {searching && !nomatches && (
         <MoviesCardList

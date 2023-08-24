@@ -1,83 +1,39 @@
 import React from "react";
-import { useEffect } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import { useFormValidation } from "../../utils/useFormValidation";
-import { useNavigate, useLocation } from "react-router-dom";
 
 function SearchFormSave({
   location,
   onGetFilms,
   isCheckedSaved,
   setIsCheckedSaved,
-  setIsLoading,
-  setIsChecked,
-  isChecked,
-  lastSearchText,
-  isLoading,
   savedFilms,
-  setSavedFilms,
-  saveToFilms,
   setSavedToFilms,
-  onInitialFilm,
-  savedFilteredFilms,
-  renderedSavesFilms,
   setRenderedSavesFilms,
-  setSavedFilteredFilms,
   onDutaionFilter,
+  setNomatches,
+  setSearching,
 }) {
-  const navigate = useNavigate();
-  const { values, errors, handleChange, setErrors, reset, setValue } =
+  const { values, errors, handleChange, setErrors } =
     useFormValidation();
-
-  // useEffect(() => {
-  //   if (lastSearchText) {
-  //     setValue("filmName", lastSearchText);
-  //   }
-  // }, [location.pathname, isLoading]);
-
   const handleBlur = () => {
     setErrors((oldErrors) => ({ ...oldErrors, filmName: "" })); // Устанавливаем ошибку для filmName в пустую строку
   };
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    console.log("123");
+    setNomatches(false);
+
     if (values.filmName) {
-      console.log(saveToFilms);
-
-      // onInitialFilm();
-
-      // console.log(savedFilms);
-
       const getSavedFilmsArray = onGetFilms(values.filmName, savedFilms);
-      // setRenderedSavesFilms(getSavedFilmsArray);
-      // setSavedToFilms(getSavedFilmsArray)
-      // setRenderedSavesFilms(getSavedFilmsArray);
-      console.log(getSavedFilmsArray);
-      setSavedToFilms(getSavedFilmsArray);
-      // setSearchedSaveFilms()
+      setSavedToFilms(getSavedFilmsArray); // не торгать
       const filtered = onDutaionFilter(getSavedFilmsArray, isCheckedSaved);
-      console.log(filtered);
-
-
       setRenderedSavesFilms(filtered);
+      setSearching(true);
 
-
-      // console.log(getSavedFilmsArray);
-      // console.log(savedFilms);
-      // setSavedFilms(getSavedFilmsArray);
-
-      // setSavedFilteredFilms(getSavedFilmsArray); // НЕ ТРОГАТЬ
-      // console.log(getSavedFilmsArray);
-      // console.log(filtered);
-      // setRenderedSavesFilms(filtered);
-      // setIsLoading(true);
-      // onGetFilms(values.filmName);
-      // console.log(values.filmName);
-      // navigate("/movies");
-      // setValue("filmName", values.filmName);
-      // console.log(values.filmName);
-      // reset();
+      if (filtered.length === 0) {
+        setNomatches(true);
+      }
     } else {
       setErrors({ filmName: "Нужно ввести ключевое слово" });
     }
@@ -101,8 +57,6 @@ function SearchFormSave({
       <span className="search-form__error">{errors["filmName"]}</span>
       <hr className="search-form__divider" />
       <FilterCheckbox
-        // setIsChecked={setIsChecked}
-        // isChecked={isChecked}
         location={location}
         isCheckedSaved={isCheckedSaved}
         setIsCheckedSaved={setIsCheckedSaved}

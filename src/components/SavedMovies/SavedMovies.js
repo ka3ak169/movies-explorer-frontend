@@ -1,62 +1,43 @@
 import React from "react";
-import SearchForm from "../SearchForm/SearchForm";
 import SearchFormSave from "../SearchFormSave/SearchFormSave";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import Preloader from "../Preloader/Preloader";
+
 
 function SavedMovies({
   location,
   savedFilms,
-  setSavedFilms,
   onDelFilm,
-  onInitialFilm,
   onGetFilms,
   isCheckedSaved,
   setIsCheckedSaved,
-  setSavedFilteredFilms,
-  savedFilteredFilms,
   onDutaionFilter,
-  renderedSavesFilms,
   setRenderedSavesFilms,
   films,
   saveToFilms,
   setSavedToFilms,
-  setIsLoading,
-  setIsChecked,
-  isChecked,
-  lastSearchText,
+  nomatches,
+  setNomatches,
+  searching,
+  preloaderHidden,
+  onPreloader,
+  setSearching,
   isLoading
 }) {
 
   return (
     <main className="main">
-      {/* <SearchForm
-        onGetFilms={onGetFilms}
-        setIsLoading={setIsLoading}
-        setIsChecked={setIsChecked}
-        isChecked={isChecked}
-        lastSearchText={lastSearchText}
-        isLoading={isLoading}
-      /> */}
       <SearchFormSave
         location={location}
         onGetFilms={onGetFilms}
         savedFilms={savedFilms}
-        setSavedFilms={setSavedFilms}
         isCheckedSaved={isCheckedSaved}
         setIsCheckedSaved={setIsCheckedSaved}
-        setSavedFilteredFilms={setSavedFilteredFilms}
-        savedFilteredFilms={savedFilteredFilms}
         onDutaionFilter={onDutaionFilter}
-        renderedSavesFilms={renderedSavesFilms}
         setRenderedSavesFilms={setRenderedSavesFilms}
-        onInitialFilm={onInitialFilm}
-        saveToFilms={saveToFilms}
         setSavedToFilms={setSavedToFilms}
-        // setIsLoading={setIsLoading}
-        // setIsChecked={setIsChecked}
-        // isChecked={isChecked}
-        // lastSearchText={lastSearchText}
-        // isLoading={isLoading}
+        setNomatches={setNomatches}
+        setSearching={setSearching}
       />
       <MoviesCardList
         location={location}
@@ -65,7 +46,13 @@ function SavedMovies({
         onDelFilm={onDelFilm}
         saveToFilms={saveToFilms}
         setSavedToFilms={setSavedToFilms}
-        // onInitialFilm={onInitialFilm}
+      />
+      <Preloader
+        isLoading={isLoading}
+        nomatches={nomatches}
+        searching={searching}
+        preloaderHidden={preloaderHidden}
+        onPreloader={onPreloader}
       />
     </main>
   );

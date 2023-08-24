@@ -13,7 +13,7 @@ function MoviesCardList({
   setSavedToFilms,
   saveToFilms
 }) {
-  console.log(films);
+  // console.log(films);
 
   if (searchError) {
     return (

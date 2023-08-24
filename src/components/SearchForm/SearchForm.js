@@ -2,30 +2,28 @@ import React from "react";
 import { useEffect } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import { useFormValidation } from "../../utils/useFormValidation";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function SearchForm({
   onGetFilms,
-  setIsLoading,
   setIsChecked,
   isChecked,
   lastSearchText,
   isLoading,
-  filteredFilms,
   allFilms,
   onDutaionFilter,
   setRenderedMoviesFilms,
-  setFilteredFilms,
   setSearching,
+  filmsToMovies,
+  setFilmsToMovies,
+  setNomatches,
 }) {
-  const navigate = useNavigate();
   const location = useLocation();
-  const { values, errors, handleChange, setErrors, reset, setValue } =
+  const { values, errors, handleChange, setErrors, setValue } =
     useFormValidation();
 
   useEffect(() => {
     if (lastSearchText) {
-      console.log(lastSearchText);
       setValue("filmName", lastSearchText);
     }
   }, [location.pathname, isLoading]);
@@ -34,35 +32,25 @@ function SearchForm({
     setErrors((oldErrors) => ({ ...oldErrors, filmName: "" })); // Устанавливаем ошибку для filmName в пустую строку
   };
 
-  // useEffect(() => {
-  //   if (lastSearchText) {
-  //     setValue("filmName", lastSearchText);
-  //   }
-  // }, [location.pathname, isLoading]);
-
   function handleSubmit(evt) {
+    setNomatches(false);
     evt.preventDefault();
     if (values.filmName) {
-      // setIsLoading(true);
-      const getFilmsArray = onGetFilms(values.filmName, allFilms);
-      console.log(getFilmsArray);
-      setFilteredFilms(getFilmsArray); //НЕ ТРОГАТЬ
-      const filtered = onDutaionFilter(filteredFilms, isChecked);
-      setRenderedMoviesFilms(filtered);
+      const filtredMoviesFilms = onGetFilms(values.filmName, allFilms);
+      setFilmsToMovies(filtredMoviesFilms); // не торгать
+      const durationFiltered = onDutaionFilter(filmsToMovies, isChecked);
+
+      setRenderedMoviesFilms(durationFiltered);
+
       const lastSearchData = {
         text: values.filmName,
         isCheckedFilter: isChecked,
       };
       localStorage.setItem("lastSearchData", JSON.stringify(lastSearchData));
       setSearching(true);
-      // const durationFiltredFilms = onDutaionFilter(getFilmsArray, isChecked);
-      // console.log(durationFiltredFilms);
-      // setRenderedMoviesFilms(getFilmsArray);
-      // console.log(values.filmName);
-      // navigate("/movies");
-      // setValue("filmName", values.filmName);
-      // console.log(values.filmName);
-      // reset();
+      if (filtredMoviesFilms.length === 0) {
+        setNomatches(true);
+      }
     } else {
       setErrors({ filmName: "Нужно ввести ключевое слово" });
     }
