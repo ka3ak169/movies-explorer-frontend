@@ -356,7 +356,7 @@ function App() {
   };
 
   const filterDurationFilms = (films, isShort) => {
-    return isShort ? films : films.filter((f) => f.duration > 40);
+    return !isShort ? films : films.filter((f) => f.duration <= 40);
   };
 
   const searchFilterFilms = (searchText, films) => {
