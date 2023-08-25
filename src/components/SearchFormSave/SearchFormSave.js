@@ -13,6 +13,7 @@ function SearchFormSave({
   onDutaionFilter,
   setNomatches,
   setSearching,
+  onResize
 }) {
   const { values, errors, handleChange, setErrors } =
     useFormValidation();
@@ -23,7 +24,7 @@ function SearchFormSave({
   function handleSubmit(evt) {
     evt.preventDefault();
     setNomatches(false);
-
+    onResize();
     if (values.filmName) {
       const getSavedFilmsArray = onGetFilms(values.filmName, savedFilms);
       setSavedToFilms(getSavedFilmsArray); // не торгать

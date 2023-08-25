@@ -3,9 +3,17 @@ import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { movieApiPart } from "../../utils/utils";
 
-
-
-function MoviesCard({ location, film, onAddFilm, onDelFilm, filmsToRender, savedFilms, onInitialFilm, setSavedToFilms, saveToFilms }) {
+function MoviesCard({
+  location,
+  film,
+  onAddFilm,
+  onDelFilm,
+  filmsToRender,
+  savedFilms,
+  onInitialFilm,
+  setSavedToFilms,
+  saveToFilms,
+}) {
   const [cardIsActive, setCardIsActive] = useState(false);
   const currentUser = useContext(CurrentUserContext);
 
@@ -21,10 +29,13 @@ function MoviesCard({ location, film, onAddFilm, onDelFilm, filmsToRender, saved
         }
       });
     }
-  }, [filmsToRender, savedFilms, film.id]) // Добавляем film.id в зависимости
+  }, [filmsToRender, savedFilms, film.id, saveToFilms]);
 
-  
-  
+  useEffect(() => {
+
+    setCardIsActive(cardIsActive)
+  }, [saveToFilms]); 
+
   function formatDuration(minutes) {
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
@@ -32,47 +43,51 @@ function MoviesCard({ location, film, onAddFilm, onDelFilm, filmsToRender, saved
   }
 
   function handleFavoriteSubmit() {
-    setCardIsActive(!cardIsActive);
-    onAddFilm(film, currentUser._id);
-    onInitialFilm();
-  }
-
-  function handleDeleteSubmit() {
-      // Найти элемент в savedFilms, у которого movieId совпадает с film.id
-      const savedFilm = savedFilms.find(savedFilm => savedFilm.movieId === film.id);
-    if (savedFilm) { // Проверка на случай, если совпадение не найдено
-      onDelFilm(savedFilm._id)
-      .then((result) => {
-        setCardIsActive(false);
-        onInitialFilm();
+    onAddFilm(film, currentUser._id)
+      .then((data) => {
+        setCardIsActive(!cardIsActive);
+        setSavedToFilms((prevFilms) => [
+          ...prevFilms,
+          data.movie
+        ]);
+        setCardIsActive(true);
       })
       .catch((error) => {
-        // Обработка ошибки
-        console.log(error);  
+        console.log(error);
       });
+  }
+  
+
+  function handleDeleteSubmit() {
+    // Найти элемент в savedFilms, у которого movieId совпадает с film.id
+    const savedFilm = savedFilms.find(
+      (savedFilm) => savedFilm.movieId === film.id
+    );
+    if (savedFilm) {
+      // Проверка на случай, если совпадение не найдено
+      onDelFilm(savedFilm._id)
+        .then((result) => {
+          setCardIsActive(false);
+          setSavedToFilms((prevFilms) =>
+          prevFilms.filter((f) => f._id !== savedFilm._id));
+          setCardIsActive(false);          
+        })
+        .catch((error) => {
+          // Обработка ошибки
+          console.log(error);
+        });
     } else {
-      console.log('Film not found in savedFilms');
+      console.log("Film not found in savedFilms");
     }
   }
-
-  // function handleDeleteFavoriteSubmit() {
-  //   onDelFilm(film._id)
-  //     .then((result) => {
-  //       // onInitialFilm();
-
-  //     })
-  //     .catch((error) => {
-  //       // Обработка ошибки
-  //       console.log(error);  
-  //     });
-  // }
-
 
   function handleDeleteFavoriteSubmit() {
     onDelFilm(film._id)
       .then((result) => {
         console.log(result._id);
-        setSavedToFilms((prevFilms) => prevFilms.filter((f) => f._id !== film._id));
+        setSavedToFilms((prevFilms) =>
+          prevFilms.filter((f) => f._id !== film._id)
+        );
       })
       .catch((error) => {
         // Обработка ошибки
@@ -81,21 +96,20 @@ function MoviesCard({ location, film, onAddFilm, onDelFilm, filmsToRender, saved
   }
 
   function handleClick() {
-    if(!cardIsActive) {
-      handleFavoriteSubmit()
+    if (!cardIsActive) {
+      handleFavoriteSubmit();
     } else {
-      handleDeleteSubmit()
+      handleDeleteSubmit();
     }
   }
 
   useEffect(() => {
-    if (location === 'saved') {
-      setCardIsActive(false); 
+    if (location === "saved") {
+      setCardIsActive(false);
     }
   }, [location]);
 
   return (
-
     <div className="moviesCard">
       <Link
         className="moviesCard__trailerLink"
@@ -104,7 +118,9 @@ function MoviesCard({ location, film, onAddFilm, onDelFilm, filmsToRender, saved
       >
         <img
           className="moviesCard__img"
-          src={location === 'saved' ? film.image : movieApiPart + film.image.url}
+          src={
+            location === "saved" ? film.image : movieApiPart + film.image.url
+          }
           // src={film.image}
           alt="Картинка"
         />
@@ -121,7 +137,9 @@ function MoviesCard({ location, film, onAddFilm, onDelFilm, filmsToRender, saved
           className={`moviesCard__button ${
             cardIsActive ? "moviesCard__button_active" : ""
           } ${location === "saved" ? "moviesCard__button_delete" : ""} `}
-          onClick={location === 'saved' ? handleDeleteFavoriteSubmit : handleClick}
+          onClick={
+            location === "saved" ? handleDeleteFavoriteSubmit : handleClick
+          }
         />
       </div>
     </div>

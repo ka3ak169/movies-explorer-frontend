@@ -47,8 +47,6 @@ export const changeUserInformation = (data) => {
 
 // добавляем в избранное
 export const postFavoriteMovies = (data, owner) => {
-  console.log(data);
-  console.log(movieApiPart + data.image.url);
 
   return fetch(`${apiUrl}/movies`, {
     method: 'POST',

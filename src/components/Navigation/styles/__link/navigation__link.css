@@ -10,3 +10,7 @@
 .navigation__link:hover {
   font-weight: 500;
 }
+
+.navigation__link.active {
+  font-weight: 900;
+}

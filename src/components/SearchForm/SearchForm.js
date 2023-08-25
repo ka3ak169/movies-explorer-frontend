@@ -17,6 +17,7 @@ function SearchForm({
   filmsToMovies,
   setFilmsToMovies,
   setNomatches,
+  onResize
 }) {
   const location = useLocation();
   const { values, errors, handleChange, setErrors, setValue } =
@@ -33,8 +34,9 @@ function SearchForm({
   };
 
   function handleSubmit(evt) {
-    setNomatches(false);
     evt.preventDefault();
+    setNomatches(false);
+    onResize();
     if (values.filmName) {
       const filtredMoviesFilms = onGetFilms(values.filmName, allFilms);
       setFilmsToMovies(filtredMoviesFilms); // не торгать

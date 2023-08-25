@@ -27,7 +27,11 @@ function Movies({
   filmsToMovies,
   setFilmsToMovies,
   setNomatches,
-  nomatches
+  nomatches,
+  onResize,
+  setSavedFilms,
+  setSavedToFilms,
+  saveToFilms
 }) {
 
   return (
@@ -45,6 +49,7 @@ function Movies({
         filmsToMovies={filmsToMovies}
         setFilmsToMovies={setFilmsToMovies}
         setNomatches={setNomatches}
+        onResize={onResize}
       />
       {searching && !nomatches && (
         <MoviesCardList
@@ -56,6 +61,9 @@ function Movies({
           filmsToRender={filmsToRender}
           savedFilms={savedFilms}
           onInitialFilm={onInitialFilm}
+          setSavedFilms={setSavedFilms}
+          setSavedToFilms={setSavedToFilms}
+          saveToFilms={saveToFilms}
         />
       )}
       <Preloader

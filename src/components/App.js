@@ -80,13 +80,15 @@ function App() {
     return 5;
   }
 
+  // Функция, которая будет вызываться при изменении размера окна
+  function handleResize() {
+    const newRowsToShow = getDefaultRows();
+    // console.log(newRowsToShow);
+    setRowsToShow(newRowsToShow);
+  }
+
   useEffect(() => {
-    // Функция, которая будет вызываться при изменении размера окна
-    function handleResize() {
-      const newRowsToShow = getDefaultRows();
-      // console.log(newRowsToShow);
-      setRowsToShow(newRowsToShow);
-    }
+    handleResize();
 
     // Добавляем слушатель события resize
     window.addEventListener("resize", handleResize);
@@ -178,6 +180,13 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (location.pathname === '/movies') {
+      getInintialSavedFilms();
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    // console.log(setSavedToFilms);
     getInintialSavedFilms(); //получение массива сохраненных фильмов
     const fetchData = async () => {
       try {
@@ -203,7 +212,7 @@ function App() {
           const token = JSON.parse(storedToken);
           await tokenCheck(token);
           setLoggedIn(true);
-          navigate(lastVisitedPage); // Перенаправление на последнюю посещенную страницу
+          navigate(lastVisitedPage, {replace: true}); // Перенаправление на последнюю посещенную страницу
         }
       } catch (error) {
         handleLogout();
@@ -274,7 +283,7 @@ function App() {
       .then((result) => {
         localStorage.setItem("token", JSON.stringify(result.token));
         setLoggedIn(true);
-        navigate("/movies");
+        navigate("/movies", {replace: true});
       })
       .catch((error) => {
         // Обработка ошибки
@@ -313,12 +322,16 @@ function App() {
   };
 
   const addFavoriteMovies = (film, owner) => {
-    postFavoriteMovies(film, owner)
-      .then((result) => {})
+    return postFavoriteMovies(film, owner)
+      .then((result) => {
+        return result;
+      })
       .catch((error) => {
         console.log(error);
+        throw error;
       });
   };
+  
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -335,7 +348,7 @@ function App() {
     setFilmsToRender([]);
     setIsChecked(false);
     setFilms([]);
-    navigate("/");
+    navigate("/",  {replace: true});
     setLastSearchText("");
     setPrerenderMoviesFilms([]);
     setFilmsToMovies([]);
@@ -461,6 +474,10 @@ function App() {
                     location={"movies"}
                     savedFilms={savedFilms}
                     setSearching={setSearching}
+                    onResize={handleResize}
+                    setSavedFilms={setSavedFilms}
+                    setSavedToFilms={setSavedToFilms}
+                    saveToFilms={saveToFilms}
                   />
                   <Footer />
                 </>
@@ -491,6 +508,8 @@ function App() {
                     preloaderHidden={preloaderSavedHidden}
                     onPreloader={handleSavedPreloaderButton}
                     setSearching={setSearching}
+                    onResize={handleResize}
+                    setSavedFilms={setSavedFilms}
                   />
                   <Footer />
                 </>
@@ -535,7 +554,7 @@ function App() {
               path="*"
               element={
                 <>
-                  <NotFound />
+                  <NotFound lastVisitedPage={lastVisitedPage}/>
                 </>
               }
             />

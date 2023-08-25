@@ -1,5 +1,5 @@
 import React, { useState, useContext  } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import SideNavigation from '../SideNavigation/SideNavigation'
 import logo from "../../images/logo.svg"
 import { LoggedInContext } from '../../contexts/LoggedInContext';
@@ -35,8 +35,8 @@ function Navigation({ location }) {
         <img className="header__logo" src={logo} alt="лого" />
         </Link>
         <nav className="navigation__film-container">
-          <Link className="navigation__link" to={"/movies"}>Фильмы</Link>
-          <Link className="navigation__link" to={"/saved-movies"}>Сохранённые фильмы</Link>
+          <NavLink className="navigation__link" to={"/movies"}>Фильмы</NavLink>
+          <NavLink className="navigation__link" to={"/saved-movies"}>Сохранённые фильмы</NavLink>
         </nav>
         <Link className="navigation__account-container" to={"/profile"}>
           <p className="navigation__link">Аккаунт</p>

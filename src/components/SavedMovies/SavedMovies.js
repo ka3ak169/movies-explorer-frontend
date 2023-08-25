@@ -22,7 +22,9 @@ function SavedMovies({
   preloaderHidden,
   onPreloader,
   setSearching,
-  isLoading
+  isLoading,
+  onResize,
+  setSavedFilms
 }) {
 
   return (
@@ -38,6 +40,7 @@ function SavedMovies({
         setSavedToFilms={setSavedToFilms}
         setNomatches={setNomatches}
         setSearching={setSearching}
+        onResize={onResize}        
       />
       <MoviesCardList
         location={location}
