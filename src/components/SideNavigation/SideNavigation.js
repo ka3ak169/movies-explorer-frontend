@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function SideNavigation({ isMenuOpen, setMenuOpen }) {
   const closeSideNavigation = () => {
@@ -19,27 +19,27 @@ function SideNavigation({ isMenuOpen, setMenuOpen }) {
           onClick={closeSideNavigation}
         ></div>
         <nav className="side-navigation__link-container">
-          <Link
+          <NavLink
             className="side-navigation__link"
             to={"/"}
             onClick={closeSideNavigation}
           >
             Главная
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             className="side-navigation__link"
             to={"/movies"}
             onClick={closeSideNavigation}
           >
             Фильмы
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             className="side-navigation__link"
             to={"/saved-movies"}
             onClick={closeSideNavigation}
           >
             Сохранённые фильмы
-          </Link>
+          </NavLink>
         </nav>
         <Link
           className={`navigation__account-container ${
