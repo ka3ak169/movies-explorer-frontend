@@ -1,0 +1,8 @@
+.side-navigation__link-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  /* margin-top: 159px; */
+  gap: 28px;
+}

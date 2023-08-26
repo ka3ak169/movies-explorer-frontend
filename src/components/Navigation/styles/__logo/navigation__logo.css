@@ -1,0 +1,14 @@
+.navigation__logo {
+  background-color: #313131;
+  height: 26px;
+  width: 26px;
+  background-image: url("../../../../images/manikin.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50px;
+  transition: .3s;
+}
+
+.navigation__logo:hover {
+  transform: scale(1.2);
+}

@@ -1,0 +1,15 @@
+.about-me__img {
+  object-fit: cover;
+  box-sizing: border-box;
+  max-width: 270px;
+  height: auto;
+  border-radius: 10px;
+  /* max-width: 100%; */
+}
+
+@media screen and (max-width: 600px) {
+  .about-me__img {
+    max-width: 100%;
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,6 @@
+.preloader__row {
+  width: 70px;
+  height: 70px;
+  text-align: center;
+  animation: preloader-rotate 2s infinite linear;
+}

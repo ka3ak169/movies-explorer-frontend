@@ -1,0 +1,15 @@
+.side-navigation__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* черный цвет с 50% прозрачностью */
+  z-index: 9;
+}
+
+@media screen and (min-width: 769px) {
+  .side-navigation__overlay {
+    display: none;
+  }
+}

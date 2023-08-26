@@ -1,0 +1,25 @@
+.about-me__git {
+  display: inline-block;
+  margin: 99px 0 0;
+  text-decoration: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  transition: .4s;
+}
+
+.about-me__git:hover {
+  transform: scale(1.2);
+}
+
+@media screen and (max-width: 768px) {
+  .about-me__git  {
+    margin: 87px 0 0;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .about-me__git  {
+    margin: 40px 0 0;
+  }
+}

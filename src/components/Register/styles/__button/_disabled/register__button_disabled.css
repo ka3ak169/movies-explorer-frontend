@@ -1,0 +1,6 @@
+.register__button_disabled {
+  opacity: .2;
+  pointer-events: none;
+  background-color: transparent;
+  border: 1px solid #424242;
+}

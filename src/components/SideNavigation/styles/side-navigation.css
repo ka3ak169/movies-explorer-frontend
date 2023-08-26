@@ -1,0 +1,30 @@
+.side-navigation {
+  position: fixed;
+  max-width: 520px;
+  width: 100%;
+  max-height: 100vh;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background-color: #202020;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform .5s;
+  padding: 159px 0 90px;
+  box-sizing: border-box;
+}
+
+@media screen and (min-width: 769px) {
+  .side-navigation {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .side-navigation {
+    padding: 144px 0 46px;
+  }
+}

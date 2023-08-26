@@ -1,0 +1,12 @@
+.techs__divider {
+  margin: 23px 0 0 0;
+  border: none;
+  border-top: 1px solid #DADADA;
+}
+
+@media screen and (max-width: 376px) {
+  .techs__divider {
+    margin: 28px 0 0 0;
+    border-top: 1px solid #000;
+  }
+}

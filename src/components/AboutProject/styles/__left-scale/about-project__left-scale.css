@@ -1,0 +1,11 @@
+.about-project__left-scale {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 768px) {
+  .about-project__left-scale {
+    min-width: 100px;
+  }
+}

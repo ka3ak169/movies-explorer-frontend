@@ -1,0 +1,5 @@
+.profile__edit-btn_disable {
+  opacity: .2;
+  pointer-events: none;
+  background-color: transparent;
+}

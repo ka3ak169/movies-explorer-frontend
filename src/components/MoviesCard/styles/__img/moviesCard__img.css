@@ -1,0 +1,20 @@
+.moviesCard__img {
+  max-width: 100%;
+  height: 151px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .moviesCard__img {    
+    height: 190px; 
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .moviesCard__img {    
+    height: 168px; 
+  }
+}

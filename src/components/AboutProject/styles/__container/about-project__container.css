@@ -1,0 +1,22 @@
+.about-project__container {
+  margin: 70px 0 0 0;
+  display: flex;
+  column-gap: 40px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+@media screen and (max-width: 768px) {
+  .about-project__container {
+    column-gap: 30px;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .about-project__container {
+    margin: 60px 0 0 0;
+    flex-direction: column;
+    gap: 56px;
+  }
+}

@@ -1,0 +1,17 @@
+.side-navigation__link {
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;  
+}
+
+.side-navigation__link:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.side-navigation__link.active {
+  font-weight: 900;
+
+}

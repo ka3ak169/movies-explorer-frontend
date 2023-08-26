@@ -1,0 +1,32 @@
+.moviesCard {
+  width: 270px;
+  height: 218px;
+  /* height: 100%; */
+  border-radius: 10px;
+  background-color: #222222;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto 0;
+  box-sizing: border-box;
+  transition: .3s;
+}
+
+.moviesCard:hover {
+  border: 2px solid #4285F4;
+  box-shadow: 0 0 10px #4285F4;
+}
+
+@media screen and (max-width: 768px) {
+  .moviesCard {    
+    width: 339px;
+    height: 257px;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .moviesCard {    
+    width: 300px;
+  max-height: 235px;
+  }
+}

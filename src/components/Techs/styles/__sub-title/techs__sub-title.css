@@ -1,0 +1,19 @@
+.techs__sub-title {
+  margin: 90px auto 0;
+  font-size: 50px;
+  letter-spacing: -2px;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 768px) {
+  .techs__sub-title {
+    margin: 80px auto 0;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .techs__sub-title {
+    font-size: 30px;
+    margin: 60px auto 0;
+  }
+}

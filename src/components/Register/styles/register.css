@@ -1,0 +1,44 @@
+.register {
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  max-width: 396px;
+  padding: 70px 0 70px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  
+}
+
+@media screen and (max-width: 768px) {
+  .register {
+    padding: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .register {
+    padding: 56px 30px 30px;
+
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .register {
+    box-sizing: border-box;
+    position: static;
+    left: auto;
+    top: auto;
+    transform: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+}

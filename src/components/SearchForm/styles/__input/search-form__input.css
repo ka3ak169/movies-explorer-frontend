@@ -1,0 +1,35 @@
+.search-form__input {
+  font-size: 28px;
+  font-weight: 500;
+  color: #8B8B8B;
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 95%;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.search-form__input::placeholder {
+  color: #8B8B8B;
+}
+
+.search-form__input:focus {
+  border: none;
+  outline: 1px solid #424242;
+  outline-offset: 4px; 
+  border-radius: 1px;
+}
+
+@media screen and (max-width: 900px) {
+  .search-form__input {    
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .search-form__input {    
+    width: 85%;
+    font-size: 18px;
+  }
+}

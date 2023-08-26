@@ -1,0 +1,17 @@
+.navigation__registr {
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #fff;
+  transition: .3s;
+}
+
+.navigation__registr:hover {
+  color: #000;
+}
+
+@media screen and (max-width: 320px) {
+  .navigation__registr {
+    font-size: 10px;
+  }
+}
